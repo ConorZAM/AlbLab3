@@ -44,12 +44,20 @@ public class GlobalWind : MonoBehaviour
         }
     }
 
-    void SetWindVelocity()
+    public void SetWindVelocity()
     {
         earthWindVector = Quaternion.Euler(windElevation, windAzimuth, 0) * Vector3.forward * windSpeed;
         for (int i = 0; i < aeroBodies.Length; i++)
         {
             aeroBodies[i].externalFlowVelocity_inEarthFrame = earthWindVector;
+        }
+    }
+
+    public void Initialise()
+    {
+        for (int i = 0; i < aeroBodies.Length; i++)
+        {
+            aeroBodies[i].Initialise();
         }
     }
 

@@ -20,17 +20,39 @@ public class ExperimentManager : MonoBehaviour
     }
 
     public ExperimentSetting experimentSetting;
-    private ExperimentSetting previousExperimentSetting;
 
-    ConfigurableJoint joint;
+    [HideInInspector]
+    public ConfigurableJoint joint;
     public Rigidbody aircraftRb;
+    [Tooltip("Used to position the CG of the aircraft")]
+    public Transform centreOfGravity;
+    private Transform root { get { return aircraftRb.transform.root; } }
 
-    private Vector3 aircraftPosition_WindTunnel;
-    private Vector3 aircraftPosition_Gimbal;
-    private Vector3 aircraftPosition_freeFlight;
+    public Vector3 aircraftPosition_WindTunnel;
+    public Vector3 aircraftPosition_Gimbal;
+    public Vector3 aircraftPosition_freeFlight;
 
+    public void DoExperimentSetup()
+    {
+        UpdateAircraftCg();
 
-    void AddFixedJoint()
+        switch (experimentSetting)
+        {
+            case ExperimentSetting.WindTunnel:
+                DoWindTunnelSetup();
+                break;
+            case ExperimentSetting.Gimbal:
+                DoGimbalSetup();
+                break;
+            case ExperimentSetting.FreeFlight:
+                DoFreeFlightSetup();
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void AddFixedJoint()
     {
         AddConfigurableJoint();
 
@@ -49,7 +71,7 @@ public class ExperimentManager : MonoBehaviour
         joint.angularZMotion = ConfigurableJointMotion.Locked;
     }
 
-    void AddGimbalJoint()
+    public void AddGimbalJoint()
     {
         AddConfigurableJoint();
 
@@ -66,7 +88,7 @@ public class ExperimentManager : MonoBehaviour
         joint.angularZMotion = ConfigurableJointMotion.Free;
     }
 
-    void AddConfigurableJoint()
+    public void AddConfigurableJoint()
     {
         joint = aircraftRb.gameObject.GetComponent<ConfigurableJoint>();
         if (joint == null)
@@ -75,43 +97,13 @@ public class ExperimentManager : MonoBehaviour
         }
     }
 
-    void RemoveJoint()
+    public void RemoveJoint()
     {
         joint = aircraftRb.gameObject.GetComponent<ConfigurableJoint>();
         if (joint != null)
         {
             DestroyImmediate(joint);
         }
-    }
-
-
-    private void OnValidate()
-    {
-        // Only update if the user has changed the experiment setting
-        if (previousExperimentSetting != experimentSetting)
-        {
-            DoExperimentSetup();
-        }
-    }
-
-    void DoExperimentSetup()
-    {
-        switch (experimentSetting)
-        {
-            case ExperimentSetting.WindTunnel:
-                DoWindTunnelSetup();
-                break;
-            case ExperimentSetting.Gimbal:
-                DoGimbalSetup();
-                break;
-            case ExperimentSetting.FreeFlight:
-                DoFreeFlightSetup();
-                break;
-            default:
-                break;
-        }
-
-        previousExperimentSetting = experimentSetting;
     }
 
     private void DoFreeFlightSetup()
@@ -121,8 +113,10 @@ public class ExperimentManager : MonoBehaviour
         // Might still be worth having telemetry going to grapher - will see how expensive it is
 
         RemoveJoint();
-        aircraftRb.transform.position = aircraftPosition_freeFlight;
+        root.position = aircraftPosition_freeFlight;
 
+        // Disable the wind tunnel experiment
+        SetWindTunnelExperimentActive(false);
     }
 
     private void DoGimbalSetup()
@@ -134,9 +128,12 @@ public class ExperimentManager : MonoBehaviour
         // Need to take the joint off so we can move the aircraft
         RemoveJoint();
 
-        aircraftRb.transform.position = aircraftPosition_Gimbal;
+        root.position = aircraftPosition_Gimbal;
 
         AddGimbalJoint();
+
+        // Disable the wind tunnel experiment
+        SetWindTunnelExperimentActive(false);
     }
 
     private void DoWindTunnelSetup()
@@ -150,13 +147,33 @@ public class ExperimentManager : MonoBehaviour
         // Need to take the joint off so we can move the aircraft
         RemoveJoint();
 
-        aircraftRb.transform.position = aircraftPosition_WindTunnel;
+        root.position = aircraftPosition_WindTunnel;
 
         AddFixedJoint();
+
+        // Check that the experiment script is there and enabled
+        SetWindTunnelExperimentActive(true);
     }
 
+    void SetWindTunnelExperimentActive(bool active)
+    {
+        // Check that the experiment script is there and enabled
+        WindTunnelExperiment windTunnelExperiment = GetComponent<WindTunnelExperiment>();
+        if (windTunnelExperiment)
+        {
+            windTunnelExperiment.enabled = active;
+        }
+    }
 
+    void UpdateAircraftCg()
+    {
+        aircraftRb.centerOfMass = aircraftRb.transform.InverseTransformPoint(centreOfGravity.position);
+    }
 
+    private void Awake()
+    {
+        
+    }
 
     // Start is called before the first frame update
     void Start()
