@@ -11,11 +11,6 @@ public class Thruster : MonoBehaviour
     
     void FixedUpdate()
     {
-        if (aircraftManager)
-        {
-            ApplyThrust(aircraftManager.thrust);
-        }
-        
     }
 
     public void ApplyThrust(float thrust)

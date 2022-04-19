@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(ExperimentManager))]
 public class WindTunnelExperiment : MonoBehaviour
 {
     // I've changed this because I want the name of the script - sorry!
@@ -16,12 +17,18 @@ public class WindTunnelExperiment : MonoBehaviour
     // On day I will perform the same reflection magic I used in the data save script
     // to create an experiment manager script which varies variables, calls functions, and records results
 
+    // Properties of the aircraft which should be moved elsewhere
+    public float wingArea, chord, density = 1.2f, q;
+
+    // Manager handles the wiring of public things like rigid body and CG location
+    ExperimentManager manager;
+
     // Global Wind sets the external wind velocity for all aero bodies in the scene, only gets the bodies
     // when the simulation starts though - don't add aero bodies while the simulation is running
-    public GlobalWind globalWind;
+    GlobalWind globalWind { get { return manager.globalWind; } }
 
     // This is the transform we'll position and rotate throughout the experiments
-    public Transform aircraftRoot;
+    Transform aircraftRoot { get { return manager.aircraftRb.transform.root; } }
 
     // Going to run through a range of angle of attack values - DEGREES!!!
     public float alphaMin, alphaMax;
@@ -42,8 +49,7 @@ public class WindTunnelExperiment : MonoBehaviour
     // Used for taring the force balance
     public Vector3 forceZero, torqueZero;
 
-    // Properties of the aircraft which should be moved elsewhere
-    public float wingArea, chord, density=1.2f, q;
+  
     //public AeroBody aeroBody;
     //public ThinAerofoilComponent thinAerofoil;
     //public float aeroBodyAlpha, aerobodyCL;
@@ -56,6 +62,15 @@ public class WindTunnelExperiment : MonoBehaviour
     float alphaIncrement, alpha;
     int stepCount = 0;
 
+    private void Awake()
+    {
+        manager = GetComponent<ExperimentManager>();
+    }
+
+    private void Reset()
+    {
+        manager = GetComponent<ExperimentManager>();
+    }
 
     // Start is called before the first frame update
     void Start()

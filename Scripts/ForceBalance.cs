@@ -3,16 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(ExperimentManager))]
 public class ForceBalance : MonoBehaviour
 {
-    [Header("Components")]
     [HideInInspector]
     public ConfigurableJoint joint;
-    public Rigidbody aircraftRb;
-    public Transform centreOfGravity;
-    public GlobalWind globalWind;
+    ExperimentManager manager;
 
-    [Space(20)]
     [Header("Force Readings")]
     public Vector3 totalForce;
     public Vector3 totalTorque;
@@ -91,13 +88,13 @@ public class ForceBalance : MonoBehaviour
 
     void UpdateAircraftCg()
     {
-        aircraftRb.centerOfMass = aircraftRb.transform.InverseTransformPoint(centreOfGravity.position);
+        manager.aircraftRb.centerOfMass = manager.aircraftRb.transform.InverseTransformPoint(manager.centreOfGravity.position);
     }
 
     private void SetJointAnchor()
     {
-        joint.anchor = aircraftRb.centerOfMass;
-        joint.connectedAnchor = aircraftRb.worldCenterOfMass;
+        joint.anchor = manager.aircraftRb.centerOfMass;
+        joint.connectedAnchor = manager.aircraftRb.worldCenterOfMass;
     }
 
     private void SetJointFree()
@@ -143,20 +140,30 @@ public class ForceBalance : MonoBehaviour
             return;
         }
 
-        joint = aircraftRb.gameObject.GetComponent<ConfigurableJoint>();
+        joint = manager.aircraftRb.gameObject.GetComponent<ConfigurableJoint>();
         if (joint == null)
         {
-            joint = aircraftRb.gameObject.AddComponent<ConfigurableJoint>();
+            joint = manager.aircraftRb.gameObject.AddComponent<ConfigurableJoint>();
         }
         SetJointMode(jointMode);
     }
 
     public void RemoveJoint()
     {
-        joint = aircraftRb.gameObject.GetComponent<ConfigurableJoint>();
+        joint = manager.aircraftRb.gameObject.GetComponent<ConfigurableJoint>();
         if (joint != null)
         {
             DestroyImmediate(joint);
         }
+    }
+
+    private void Reset()
+    {
+        manager = GetComponent<ExperimentManager>();
+    }
+
+    private void Awake()
+    {
+        manager = GetComponent<ExperimentManager>();
     }
 }

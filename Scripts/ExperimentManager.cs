@@ -26,6 +26,7 @@ public class ExperimentManager : MonoBehaviour
     public Rigidbody aircraftRb;
     [Tooltip("Used to position the CG of the aircraft")]
     public Transform centreOfGravity;
+    public GlobalWind globalWind;
     private Transform root { get { return aircraftRb.transform.root; } }
 
     public Vector3 aircraftPosition_WindTunnel;
