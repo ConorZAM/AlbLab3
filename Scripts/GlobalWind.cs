@@ -1,0 +1,62 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class GlobalWind : MonoBehaviour
+{
+    // -----------------------------------------------------------
+    // -----------------------------------------------------------
+    // MAKE SURE TO SET THE EXECUTION ORDER FOR THIS SCRIPT!!!!!
+    // -----------------------------------------------------------
+    // -----------------------------------------------------------
+
+
+    [Range(0, 30)]
+    public float windSpeed = 1;
+
+    [Range(-180, 180)]
+    public float windAzimuth = 0;
+
+    [Range(-180, 180)]
+    public float windElevation = 0;
+
+
+    public Vector3 earthWindVector;
+
+    float airDensity = 1.2f;
+
+
+    public static string NewLine { get; internal set; }
+
+    AeroBody[] aeroBodies;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        // Get all the aero bodies in the scene. This is assuming that no new bodies are
+        // created at runtime
+        aeroBodies = FindObjectsOfType<AeroBody>();
+
+        // If we didn't find any then we don't need this component to be running
+        if (aeroBodies.Length == 0)
+        {
+            Destroy(this);
+        }
+    }
+
+    void SetWindVelocity()
+    {
+        earthWindVector = Quaternion.Euler(windElevation, windAzimuth, 0) * Vector3.forward * windSpeed;
+        for (int i = 0; i < aeroBodies.Length; i++)
+        {
+            aeroBodies[i].externalFlowVelocity_inEarthFrame = earthWindVector;
+        }
+    }
+
+    // The script execution order for this script must be a negative value
+    // so that this is called before the aerodynamic models run their fixed updates
+    void FixedUpdate()
+    {
+        SetWindVelocity();
+    }
+}
