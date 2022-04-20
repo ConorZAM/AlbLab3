@@ -779,6 +779,7 @@ GameObject:
   - component: {fileID: 302523725}
   - component: {fileID: 302523724}
   - component: {fileID: 302523728}
+  - component: {fileID: 302523729}
   m_Layer: 0
   m_Name: Starboard tailplane
   m_TagString: Untagged
@@ -941,6 +942,23 @@ MonoBehaviour:
   CD_roughSphere: 0.5
   reynoldsNum_linear: 0
   Cf_linear: 0
+  eab_thickness: 0
+  eab_chord: 0
+  eab_span: 0
+--- !u!114 &302523729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 302523722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d144ed43d82935f418b32dcc40e5d98e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offset: 0
+  pointAtPoint: 0
 --- !u!1001 &324637484
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1012,6 +1030,7 @@ GameObject:
   - component: {fileID: 400116621}
   - component: {fileID: 400116620}
   - component: {fileID: 400116624}
+  - component: {fileID: 400116625}
   m_Layer: 0
   m_Name: Port wing inner
   m_TagString: Untagged
@@ -1174,6 +1193,23 @@ MonoBehaviour:
   CD_roughSphere: 0.5
   reynoldsNum_linear: 0
   Cf_linear: 0
+  eab_thickness: 0
+  eab_chord: 0
+  eab_span: 0
+--- !u!114 &400116625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 400116618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d144ed43d82935f418b32dcc40e5d98e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offset: 0
+  pointAtPoint: 0
 --- !u!1 &404530936
 GameObject:
   m_ObjectHideFlags: 0
@@ -1188,6 +1224,7 @@ GameObject:
   - component: {fileID: 404530939}
   - component: {fileID: 404530938}
   - component: {fileID: 404530942}
+  - component: {fileID: 404530943}
   m_Layer: 0
   m_Name: Starboard wing inner
   m_TagString: Untagged
@@ -1350,6 +1387,23 @@ MonoBehaviour:
   CD_roughSphere: 0.5
   reynoldsNum_linear: 0
   Cf_linear: 0
+  eab_thickness: 0
+  eab_chord: 0
+  eab_span: 0
+--- !u!114 &404530943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 404530936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d144ed43d82935f418b32dcc40e5d98e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offset: 0
+  pointAtPoint: 0
 --- !u!1 &406335658
 GameObject:
   m_ObjectHideFlags: 0
@@ -1835,7 +1889,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7191342776425833837, guid: 66a4f404448add44ebd1f46a8eceeefd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.228
+      value: 0.2562
       objectReference: {fileID: 0}
     - target: {fileID: 7191342776425833837, guid: 66a4f404448add44ebd1f46a8eceeefd, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1922,6 +1976,7 @@ GameObject:
   - component: {fileID: 567762860}
   - component: {fileID: 567762859}
   - component: {fileID: 567762863}
+  - component: {fileID: 567762864}
   m_Layer: 0
   m_Name: Starboard wing outer
   m_TagString: Untagged
@@ -2100,6 +2155,20 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &567762864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 567762857}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d144ed43d82935f418b32dcc40e5d98e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offset: 0
+  pointAtPoint: 0
 --- !u!1 &590591212
 GameObject:
   m_ObjectHideFlags: 0
@@ -2821,6 +2890,7 @@ GameObject:
   - component: {fileID: 848015025}
   - component: {fileID: 848015027}
   - component: {fileID: 848015026}
+  - component: {fileID: 848015028}
   m_Layer: 0
   m_Name: Fuselage
   m_TagString: Untagged
@@ -2869,6 +2939,9 @@ MonoBehaviour:
   CD_roughSphere: 0.5
   reynoldsNum_linear: 0
   Cf_linear: 0
+  eab_thickness: 0
+  eab_chord: 0
+  eab_span: 0
 --- !u!114 &848015027
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2915,6 +2988,20 @@ MonoBehaviour:
   resultantAerodynamicForce_bodyFrame: {x: 0, y: 0, z: 0}
   resultantAerodynamicMoment_earthFrame: {x: 0, y: 0, z: 0}
   resultantAerodynamicMoment_bodyFrame: {x: 0, y: 0, z: 0}
+--- !u!114 &848015028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 848015024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d144ed43d82935f418b32dcc40e5d98e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offset: 0
+  pointAtPoint: 0
 --- !u!1 &888370517
 GameObject:
   m_ObjectHideFlags: 0
@@ -3315,6 +3402,37 @@ Transform:
   m_Father: {fileID: 590591213}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 5.3, z: 0.49}
+--- !u!1 &1076115311
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1076115312}
+  m_Layer: 0
+  m_Name: CG Reference
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1076115312
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1076115311}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 9.90136e-12, y: 0.00014559328, z: 0.004193258}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6566710124910197848}
+  m_RootOrder: 54
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1101293090
 GameObject:
   m_ObjectHideFlags: 0
@@ -3458,7 +3576,19 @@ MonoBehaviour:
   q: 0
   alphaMin: -5
   alphaMax: 20
-  numberOfTestPoints: 50
+  numberOfAlphaPoints: 0
+  cgMin: 0
+  cgMax: 0
+  numberOfCgPoints: 0
+  elevatorMin: 0
+  elevatorMax: 0
+  numberOfElevatorPoints: 0
+  rudderMin: 0
+  rudderMax: 0
+  numberOfRudderPoints: 0
+  aileronMin: 0
+  aileronMax: 0
+  numberOfAileronPoints: 0
   alphaClPlot:
     serializedVersion: 2
     m_Curve: []
@@ -3779,6 +3909,7 @@ GameObject:
   - component: {fileID: 1607197978}
   - component: {fileID: 1607197977}
   - component: {fileID: 1607197981}
+  - component: {fileID: 1607197982}
   m_Layer: 0
   m_Name: Port wing outer
   m_TagString: Untagged
@@ -3941,6 +4072,23 @@ MonoBehaviour:
   CD_roughSphere: 0.5
   reynoldsNum_linear: 0
   Cf_linear: 0
+  eab_thickness: 0
+  eab_chord: 0
+  eab_span: 0
+--- !u!114 &1607197982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1607197975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d144ed43d82935f418b32dcc40e5d98e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offset: 0
+  pointAtPoint: 0
 --- !u!1 &1752845873
 GameObject:
   m_ObjectHideFlags: 0
@@ -4163,6 +4311,7 @@ GameObject:
   - component: {fileID: 2099852163}
   - component: {fileID: 2099852162}
   - component: {fileID: 2099852166}
+  - component: {fileID: 2099852167}
   m_Layer: 0
   m_Name: Port tailplane
   m_TagString: Untagged
@@ -4325,6 +4474,23 @@ MonoBehaviour:
   CD_roughSphere: 0.5
   reynoldsNum_linear: 0
   Cf_linear: 0
+  eab_thickness: 0
+  eab_chord: 0
+  eab_span: 0
+--- !u!114 &2099852167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2099852160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d144ed43d82935f418b32dcc40e5d98e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offset: 0
+  pointAtPoint: 0
 --- !u!4 &19911253300388081
 Transform:
   m_ObjectHideFlags: 0
@@ -24523,6 +24689,7 @@ Transform:
   - {fileID: 7045253079598842119}
   - {fileID: 8818519765148588568}
   - {fileID: 8567745211591971750}
+  - {fileID: 1076115312}
   m_Father: {fileID: 5443904913605597730}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
