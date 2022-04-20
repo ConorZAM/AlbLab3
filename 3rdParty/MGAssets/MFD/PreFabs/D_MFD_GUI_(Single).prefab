@@ -1982,7 +1982,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: MFD Activated
+  m_Text: 
 --- !u!114 &4514253186431650770
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8347,7 +8347,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: MFD Activated
+  m_Text: 
 --- !u!114 &4514253186620434564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13023,7 +13023,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: MFD Activated
+  m_Text: 
 --- !u!114 &4514253186778237034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27579,7 +27579,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: MFD Activated
+  m_Text: 
 --- !u!114 &4514253187178158354
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -48690,7 +48690,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: MFD Activated
+  m_Text: 
 --- !u!114 &4514253187888560791
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53124,7 +53124,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: MFD Activated
+  m_Text: 
 --- !u!114 &4514253188014468932
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55279,7 +55279,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: MFD Activated
+  m_Text: 
 --- !u!114 &4514253188130806965
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65512,7 +65512,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: MFD Activated
+  m_Text: 
 --- !u!114 &4514253188455642142
 MonoBehaviour:
   m_ObjectHideFlags: 0

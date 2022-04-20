@@ -305,7 +305,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 70868554}
-  - component: {fileID: 70868555}
   m_Layer: 0
   m_Name: Stb Ail Control hinge
   m_TagString: Untagged
@@ -329,18 +328,6 @@ Transform:
   m_Father: {fileID: 437903111}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -1.584, y: 90.667, z: 0}
---- !u!114 &70868555
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 70868553}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c4267cdb6871bf4c8749cff71c4a77d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &99206299
 GameObject:
   m_ObjectHideFlags: 0
@@ -445,7 +432,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 168583685}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 8.73, y: 0.16, z: -35.547}
+  m_LocalPosition: {x: 10, y: 2, z: -35}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -560,7 +547,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 185572113}
-  - component: {fileID: 185572114}
   m_Layer: 0
   m_Name: Port elevator Control hinge
   m_TagString: Untagged
@@ -584,18 +570,6 @@ Transform:
   m_Father: {fileID: 479537731}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &185572114
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 185572112}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c4267cdb6871bf4c8749cff71c4a77d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &206229902
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -966,6 +940,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3698310490086371835, guid: 53434d4c4fb3da54bbc81d91a5a0721d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.7890004
+      objectReference: {fileID: 0}
+    - target: {fileID: 3698310490086371835, guid: 53434d4c4fb3da54bbc81d91a5a0721d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.30459952
+      objectReference: {fileID: 0}
     - target: {fileID: 6128883299719003529, guid: 53434d4c4fb3da54bbc81d91a5a0721d, type: 3}
       propertyPath: m_Name
       value: Load cell nose
@@ -1016,6 +998,37 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 53434d4c4fb3da54bbc81d91a5a0721d, type: 3}
+--- !u!1 &329850430
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 329850431}
+  m_Layer: 0
+  m_Name: MAC Leading Edge
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &329850431
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 329850430}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.2668, z: -0.4191}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 474423185}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &400116618
 GameObject:
   m_ObjectHideFlags: 0
@@ -1460,7 +1473,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 423822403}
-  - component: {fileID: 423822404}
   m_Layer: 0
   m_Name: Control hinge
   m_TagString: Untagged
@@ -1484,18 +1496,6 @@ Transform:
   m_Father: {fileID: 971761559}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 1.064, y: 89.67, z: 0}
---- !u!114 &423822404
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 423822402}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c4267cdb6871bf4c8749cff71c4a77d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &434564785
 GameObject:
   m_ObjectHideFlags: 0
@@ -1668,6 +1668,7 @@ GameObject:
   - component: {fileID: 474423185}
   - component: {fileID: 474423186}
   - component: {fileID: 474423188}
+  - component: {fileID: 474423189}
   m_Layer: 0
   m_Name: Aircraft rigid body
   m_TagString: Untagged
@@ -1682,7 +1683,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 474423184}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1695,6 +1696,7 @@ Transform:
   - {fileID: 406335659}
   - {fileID: 463310593950784092}
   - {fileID: 49595111}
+  - {fileID: 329850431}
   m_Father: {fileID: 168583686}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1823,6 +1825,102 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
+--- !u!153 &474423189
+ConfigurableJoint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 474423184}
+  m_ConnectedBody: {fileID: 0}
+  m_ConnectedArticulationBody: {fileID: 0}
+  m_Anchor: {x: 0, y: 0.25620008, z: -0.27799988}
+  m_Axis: {x: 1, y: 0, z: 0}
+  m_AutoConfigureConnectedAnchor: 1
+  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
+  serializedVersion: 2
+  m_SecondaryAxis: {x: 0, y: 1, z: 0}
+  m_XMotion: 0
+  m_YMotion: 0
+  m_ZMotion: 0
+  m_AngularXMotion: 0
+  m_AngularYMotion: 0
+  m_AngularZMotion: 0
+  m_LinearLimitSpring:
+    spring: 0
+    damper: 0
+  m_LinearLimit:
+    limit: 0
+    bounciness: 0
+    contactDistance: 0
+  m_AngularXLimitSpring:
+    spring: 0
+    damper: 0
+  m_LowAngularXLimit:
+    limit: 0
+    bounciness: 0
+    contactDistance: 0
+  m_HighAngularXLimit:
+    limit: 0
+    bounciness: 0
+    contactDistance: 0
+  m_AngularYZLimitSpring:
+    spring: 0
+    damper: 0
+  m_AngularYLimit:
+    limit: 0
+    bounciness: 0
+    contactDistance: 0
+  m_AngularZLimit:
+    limit: 0
+    bounciness: 0
+    contactDistance: 0
+  m_TargetPosition: {x: 0, y: 0, z: 0}
+  m_TargetVelocity: {x: 0, y: 0, z: 0}
+  m_XDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_YDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_ZDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_TargetRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_TargetAngularVelocity: {x: 0, y: 0, z: 0}
+  m_RotationDriveMode: 0
+  m_AngularXDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_AngularYZDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_SlerpDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_ProjectionMode: 0
+  m_ProjectionDistance: 0.1
+  m_ProjectionAngle: 180
+  m_ConfiguredInWorldSpace: 0
+  m_SwapBodies: 0
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_EnableCollision: 0
+  m_EnablePreprocessing: 1
+  m_MassScale: 1
+  m_ConnectedMassScale: 1
 --- !u!1 &479537730
 GameObject:
   m_ObjectHideFlags: 0
@@ -1832,7 +1930,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 479537731}
-  - component: {fileID: 479537732}
   m_Layer: 0
   m_Name: Port elevator
   m_TagString: Untagged
@@ -1856,18 +1953,6 @@ Transform:
   m_Father: {fileID: 590591213}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 13, z: 45}
---- !u!114 &479537732
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 479537730}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c4267cdb6871bf4c8749cff71c4a77d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &491488496
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1889,11 +1974,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7191342776425833837, guid: 66a4f404448add44ebd1f46a8eceeefd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.2562
+      value: 0.23950005
       objectReference: {fileID: 0}
     - target: {fileID: 7191342776425833837, guid: 66a4f404448add44ebd1f46a8eceeefd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.278
+      value: -0.45999908
       objectReference: {fileID: 0}
     - target: {fileID: 7191342776425833837, guid: 66a4f404448add44ebd1f46a8eceeefd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1975,8 +2060,8 @@ GameObject:
   - component: {fileID: 567762861}
   - component: {fileID: 567762860}
   - component: {fileID: 567762859}
-  - component: {fileID: 567762863}
   - component: {fileID: 567762864}
+  - component: {fileID: 567762865}
   m_Layer: 0
   m_Name: Starboard wing outer
   m_TagString: Untagged
@@ -2089,10 +2174,10 @@ MonoBehaviour:
   bodyPlanformArea: 0.17274736
   profileArea: 0
   areaVector: {x: 0.0036560292, y: 0.17274736, z: 0.014844028}
-  volumeVector: {x: 0.026804632, y: 0.009351739, z: 0.10883084}
+  volumeVector: {x: 0.02680463, y: 0.009351738, z: 0.108830824}
   ellipsoidSurfaceArea: 0.35247195
   lambda_x: 0.085929126
-  lambda_y: 0.24629629
+  lambda_y: 0.2462963
   lambda_z: 0.021164024
   angleOfAttackRotationVector: {x: 0, y: 0, z: 0}
   alpha: 0
@@ -2113,48 +2198,6 @@ MonoBehaviour:
   resultantAerodynamicForce_bodyFrame: {x: 0, y: 0, z: 0}
   resultantAerodynamicMoment_earthFrame: {x: 0, y: 0, z: 0}
   resultantAerodynamicMoment_bodyFrame: {x: 0, y: 0, z: 0}
---- !u!114 &567762863
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 567762857}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1da83fe50d81e174489d06375626c966, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  alphaCdPressure0Plot:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  alphaCdPressure90Plot:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  alphaCdSkinFriction0Plot:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  alphaCdSkinFriction90Plot:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  alphaCdPlot:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!114 &567762864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2169,6 +2212,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   offset: 0
   pointAtPoint: 0
+--- !u!114 &567762865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 567762857}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f35c399e8587a540840429808eb2ffb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resultantForce_bodyFrame: {x: 0, y: 0, z: 0}
+  resultantMoment_bodyFrame: {x: 0, y: 0, z: 0}
+  resultantForce_earthFrame: {x: 0, y: 0, z: 0}
+  forcePointOfAction_earthFrame: {x: 0, y: 0, z: 0}
+  CD: 0
+  CD_profile: 0
+  CD_pressure_0aoa: 0
+  CD_pressure_90aoa: 0
+  CD_shear_0aoa: 0
+  CD_shear_90aoa: 0
+  CD_normalFlatPlate: 1.2
+  CD_roughSphere: 0.5
+  reynoldsNum_linear: 0
+  Cf_linear: 0
+  eab_thickness: 0
+  eab_chord: 0
+  eab_span: 0
 --- !u!1 &590591212
 GameObject:
   m_ObjectHideFlags: 0
@@ -2616,6 +2688,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3698310490086371835, guid: 53434d4c4fb3da54bbc81d91a5a0721d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.7890004
+      objectReference: {fileID: 0}
+    - target: {fileID: 3698310490086371835, guid: 53434d4c4fb3da54bbc81d91a5a0721d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.30459952
+      objectReference: {fileID: 0}
     - target: {fileID: 6128883299719003529, guid: 53434d4c4fb3da54bbc81d91a5a0721d, type: 3}
       propertyPath: m_Name
       value: Load cell stb
@@ -3011,7 +3091,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 888370518}
-  - component: {fileID: 888370519}
   m_Layer: 0
   m_Name: Port Ail Control hinge
   m_TagString: Untagged
@@ -3035,18 +3114,6 @@ Transform:
   m_Father: {fileID: 651558157}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0.524, y: 89.703, z: 0}
---- !u!114 &888370519
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 888370517}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c4267cdb6871bf4c8749cff71c4a77d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &905177379
 GameObject:
   m_ObjectHideFlags: 0
@@ -3477,6 +3544,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9b1eac7aa9fa1646b2c66666fcefb49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isControlling: 0
   centreOfGravity: {fileID: 491488497}
   portAileron: {fileID: 888370518}
   starboardAileron: {fileID: 70868554}
@@ -3557,7 +3625,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1219250184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3570,25 +3638,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23256517ad4202143a03b1e884f340b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  path: Unity Data.txt
   wingArea: 0.8
   chord: 0.5
   density: 1.2
   q: 0
+  cgHeight: -0.03
   alphaMin: -5
   alphaMax: 20
-  numberOfAlphaPoints: 0
+  numberOfAlphaPoints: 50
   cgMin: 0
   cgMax: 0
   numberOfCgPoints: 0
-  elevatorMin: 0
-  elevatorMax: 0
-  numberOfElevatorPoints: 0
+  elevatorDeflections:
+  - 0
+  - 20
+  - 40
   rudderMin: 0
   rudderMax: 0
   numberOfRudderPoints: 0
-  aileronMin: 0
-  aileronMax: 0
-  numberOfAileronPoints: 0
+  flapDeflections:
+  - 0
+  - 20
+  - 40
+  cgPositions:
+  - -0.05
+  - -0.1
+  - 0
+  - 0.1
   alphaClPlot:
     serializedVersion: 2
     m_Curve: []
@@ -3633,13 +3710,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d09bca988994c3d47adf8108d3818b96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  joint: {fileID: 0}
+  joint: {fileID: 474423189}
   totalForce: {x: 0, y: 0, z: 0}
   totalTorque: {x: 0, y: 0, z: 0}
   taredForce: {x: 0, y: 0, z: 0}
   taredTorque: {x: 0, y: 0, z: 0}
-  zeroForce: {x: 0, y: 0, z: 0}
-  zeroTorque: {x: 0, y: 0, z: 0}
+  zeroForce: {x: -0, y: -58.859997, z: -0}
+  zeroTorque: {x: -0, y: -0, z: -0}
   jointMode: 0
 --- !u!114 &1219250186
 MonoBehaviour:
@@ -3654,13 +3731,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   experimentSetting: 0
-  joint: {fileID: 0}
+  joint: {fileID: 474423189}
   aircraftRb: {fileID: 474423186}
   centreOfGravity: {fileID: 491488497}
+  leadingEdge: {fileID: 329850431}
   globalWind: {fileID: 99206300}
-  aircraftPosition_WindTunnel: {x: 0, y: 0, z: 0}
-  aircraftPosition_Gimbal: {x: 0, y: 0, z: 0}
-  aircraftPosition_freeFlight: {x: 0, y: 0, z: 0}
+  controller: {fileID: 1101293092}
+  aircraftPosition_WindTunnel: {x: 10, y: 2, z: -35}
+  aircraftPosition_Gimbal: {x: 10, y: 2, z: -35}
+  aircraftPosition_freeFlight: {x: 10, y: 2, z: -35}
 --- !u!4 &1219250187
 Transform:
   m_ObjectHideFlags: 0
@@ -4112,7 +4191,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1752845873}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4120,7 +4199,7 @@ Transform:
   - {fileID: 7851180045136876962}
   m_Father: {fileID: 605198296}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -8.48, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1842732786
 GameObject:
   m_ObjectHideFlags: 0
@@ -4229,7 +4308,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1927243519}
-  - component: {fileID: 1927243520}
   m_Layer: 0
   m_Name: Stb el Control hinge
   m_TagString: Untagged
@@ -4253,18 +4331,6 @@ Transform:
   m_Father: {fileID: 503805982}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -0.444, y: 91.968, z: -7.2}
---- !u!114 &1927243520
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1927243518}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c4267cdb6871bf4c8749cff71c4a77d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2052749022
 GameObject:
   m_ObjectHideFlags: 0
@@ -4491,6 +4557,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   offset: 0
   pointAtPoint: 0
+--- !u!1 &2145615399 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7191342776425833836, guid: 66a4f404448add44ebd1f46a8eceeefd, type: 3}
+  m_PrefabInstance: {fileID: 491488496}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2145615402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2145615399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be6ea3f15424f9e49a3b6359b66780f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &19911253300388081
 Transform:
   m_ObjectHideFlags: 0
@@ -24416,6 +24499,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3698310490086371835, guid: 53434d4c4fb3da54bbc81d91a5a0721d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.7890004
+      objectReference: {fileID: 0}
+    - target: {fileID: 3698310490086371835, guid: 53434d4c4fb3da54bbc81d91a5a0721d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.30459952
+      objectReference: {fileID: 0}
     - target: {fileID: 6128883299719003529, guid: 53434d4c4fb3da54bbc81d91a5a0721d, type: 3}
       propertyPath: m_Name
       value: Load cell port

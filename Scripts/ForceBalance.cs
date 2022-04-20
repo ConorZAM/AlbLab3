@@ -28,6 +28,8 @@ public class ForceBalance : MonoBehaviour
 
     public void SetJointMode(JointMode _jointMode)
     {
+        manager = GetComponent<ExperimentManager>();
+
         jointMode = _jointMode;
 
         AddJoint();
@@ -135,7 +137,7 @@ public class ForceBalance : MonoBehaviour
 
     public void AddJoint()
     {
-        if (joint)
+        if (joint != null)
         {
             return;
         }
