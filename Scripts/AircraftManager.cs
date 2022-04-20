@@ -15,7 +15,7 @@ public class AircraftManager : MonoBehaviour
     public float flapDelta ; //high lift device deflection in deg
     public float maxThrust ; //in N
     public float aileronDelta, elevatorDelta, rudderDelta, thrust; // control inputs indeg
-    public ConfigurableJoint cj;
+    ConfigurableJoint cj;
 
     public Thruster thruster;
     enum Flapsetting { up, down};
