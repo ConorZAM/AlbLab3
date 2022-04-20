@@ -32,7 +32,19 @@ public class WindTunnelExperiment : MonoBehaviour
 
     // Going to run through a range of angle of attack values - DEGREES!!!
     public float alphaMin, alphaMax;
-    public int numberOfTestPoints;
+    public int numberOfAlphaPoints;
+
+    // CG Movements
+    public float cgMin, cgMax;
+    public int numberOfCgPoints;
+
+    // Flap deflections
+    public float elevatorMin, elevatorMax;
+    public int numberOfElevatorPoints;
+    public float rudderMin, rudderMax;
+    public int numberOfRudderPoints;
+    public float aileronMin, aileronMax;
+    public int numberOfAileronPoints;
 
     // The joint functions are on this script
     ForceBalance forceBalance;
@@ -82,7 +94,7 @@ public class WindTunnelExperiment : MonoBehaviour
 
         Debug.Log("Running Cl vs Alpha experiment");
         // Calculate the step size for alpha given the range and number of points
-        alphaIncrement = (alphaMax - alphaMin) / numberOfTestPoints;
+        alphaIncrement = (alphaMax - alphaMin) / numberOfAlphaPoints;
         alpha = alphaMin;
 
         // Clear the curve plots
@@ -117,7 +129,7 @@ public class WindTunnelExperiment : MonoBehaviour
         // Wait for the physics to simulate
         yield return new WaitForFixedUpdate();
 
-        for (int i = 0; i < numberOfTestPoints; i++)
+        for (int i = 0; i < numberOfAlphaPoints; i++)
         {
 
             // Set the angle of attack by rotating the aircraft - note this isn't rotating about the CG
