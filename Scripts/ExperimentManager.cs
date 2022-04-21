@@ -14,12 +14,18 @@ public class ExperimentManager : MonoBehaviour
 
     public enum ExperimentSetting
     {
-        WindTunnel,
-        Gimbal,
+        WindTunnelStatic,
+        WindTunnelLongitudinalDynamics,
+        WindTunnelLateralDynamics,
+        WindTunnelGimbal,
         FreeFlight
     }
 
     public ExperimentSetting experimentSetting;
+    [Range(0f, 100f)]
+    public float CgAsPercentageOfMac;
+    float MacLength = 0.233f;
+    float verticalCgOffset;
 
     [HideInInspector]
     public ConfigurableJoint joint;
@@ -29,31 +35,90 @@ public class ExperimentManager : MonoBehaviour
     public Transform leadingEdge;
     public GlobalWind globalWind;
     public AircraftManager controller;
-    private Transform root { get { return aircraftRb.transform.root; } }
+    private Transform Root { get { return aircraftRb.transform.root; } }
 
-    public Vector3 aircraftPosition_WindTunnel;
-    public Vector3 aircraftPosition_Gimbal;
-    public Vector3 aircraftPosition_freeFlight;
+    public ExperimentSettings Settings;
+
+    ForceBalance forceBalance;
+
+    public void SetCgPosition(float offset)
+    {
+        forceBalance.RemoveJoint();
+
+        // Move the position marker
+        centreOfGravity.position = leadingEdge.TransformPoint(new Vector3(0, verticalCgOffset, offset));
+
+        // Update the rigid body as well
+        UpdateAircraftCg();
+
+        forceBalance.AddJoint();
+    }
 
     public void DoExperimentSetup()
     {
-        UpdateAircraftCg();
+        SetCgPosition(-MacLength * CgAsPercentageOfMac / 100f);
 
-        switch (experimentSetting)
+        Root.position = Settings.aircraftPosition;
+        Camera.main.transform.position = Settings.cameraPosition;
+        Camera.main.transform.eulerAngles = Settings.cameraEulerAngles;
+
+        if (Settings.DataManagerName != "None")
         {
-            case ExperimentSetting.WindTunnel:
-                DoWindTunnelSetup();
+            GameObject.Find(Settings.DataManagerName).SetActive(true);
+        }
+
+        // Apply the joint
+        switch (Settings.jointState)
+        {
+            case ExperimentSettings.JointState.Fixed:
+                AddFixedJoint();
                 break;
-            case ExperimentSetting.Gimbal:
-                DoGimbalSetup();
+            case ExperimentSettings.JointState.Lateral:
+                AddFixedJoint();
+                // Allow roll only
+                joint.angularZMotion = ConfigurableJointMotion.Free;
                 break;
-            case ExperimentSetting.FreeFlight:
-                DoFreeFlightSetup();
+            case ExperimentSettings.JointState.Longitudinal:
+                AddFixedJoint();
+                // Allow pitch only
+                joint.angularXMotion = ConfigurableJointMotion.Free;
+                break;
+            case ExperimentSettings.JointState.Gimbal:
+                AddGimbalJoint();
+                break;
+            case ExperimentSettings.JointState.Free:
+                RemoveJoint();
                 break;
             default:
+                AddFixedJoint();
                 break;
         }
+        
+        
+
+
+        //switch (experimentSetting)
+        //{
+        //    case ExperimentSetting.WindTunnelStatic:
+        //        DoWindTunnelSetup();
+        //        break;
+        //    case ExperimentSetting.WindTunnelLongitudinalDynamics:
+        //        DoLongitudinalDynamicsSetup();
+        //        break;
+        //    case ExperimentSetting.WindTunnelLateralDynamics:
+        //        DoLateralDynamicsSetup();
+        //        break;
+        //    case ExperimentSetting.WindTunnelGimbal:
+        //        DoGimbalSetup();
+        //        break;
+        //    case ExperimentSetting.FreeFlight:
+        //        DoFreeFlightSetup();
+        //        break;
+        //    default:
+        //        break;
+        //}
     }
+
 
     public void AddFixedJoint()
     {
@@ -78,8 +143,8 @@ public class ExperimentManager : MonoBehaviour
     {
         AddConfigurableJoint();
 
-        joint.anchor = Vector3.zero;
-        joint.connectedAnchor = Vector3.zero;
+        joint.anchor = aircraftRb.centerOfMass;
+        joint.connectedAnchor = aircraftRb.worldCenterOfMass;
 
         // Fixed in translation
         joint.xMotion = ConfigurableJointMotion.Locked;
@@ -109,54 +174,54 @@ public class ExperimentManager : MonoBehaviour
         }
     }
 
-    private void DoFreeFlightSetup()
-    {
-        // For free flight we want no joints attached to the aircraft
-        // No data should be recorded or saved
-        // Might still be worth having telemetry going to grapher - will see how expensive it is
+    //private void DoFreeFlightSetup()
+    //{
+    //    // For free flight we want no joints attached to the aircraft
+    //    // No data should be recorded or saved
+    //    // Might still be worth having telemetry going to grapher - will see how expensive it is
 
-        RemoveJoint();
-        root.position = aircraftPosition_freeFlight;
+    //    RemoveJoint();
+    //    Root.position = aircraftPosition_freeFlight;
 
-        // Disable the wind tunnel experiment
-        SetWindTunnelExperimentActive(false);
-    }
+    //    // Disable the wind tunnel experiment
+    //    SetWindTunnelExperimentActive(false);
+    //}
 
-    private void DoGimbalSetup()
-    {
-        // Gimbal set up needs data from the aircraft to be sent over to grapher
-        // The aircraft will be attached to a joint with fixed translation but free rotation
-        // The wind is set by the user at/before runtime
+    //private void DoGimbalSetup()
+    //{
+    //    // Gimbal set up needs data from the aircraft to be sent over to grapher
+    //    // The aircraft will be attached to a joint with fixed translation but free rotation
+    //    // The wind is set by the user at/before runtime
 
-        // Need to take the joint off so we can move the aircraft
-        RemoveJoint();
+    //    // Need to take the joint off so we can move the aircraft
+    //    RemoveJoint();
 
-        root.position = aircraftPosition_Gimbal;
+    //    Root.position = aircraftPosition_Gimbal;
 
-        AddGimbalJoint();
+    //    AddGimbalJoint();
 
-        // Disable the wind tunnel experiment
-        SetWindTunnelExperimentActive(false);
-    }
+    //    // Disable the wind tunnel experiment
+    //    SetWindTunnelExperimentActive(false);
+    //}
 
-    private void DoWindTunnelSetup()
-    {
-        // The wind tunnel is a strange one, we might have a parameter sweep in this script or
-        // that might be on another script to keep things organised. Either way, that's something
-        // which shouldn't automatically happen - the user needs to configure some of those settings
-        // so that they play a part in managing their data collection.
-        // Also, the aircraft needs to be on a completely fixed joint, no translation or rotation
+    //private void DoWindTunnelSetup()
+    //{
+    //    // The wind tunnel is a strange one, we might have a parameter sweep in this script or
+    //    // that might be on another script to keep things organised. Either way, that's something
+    //    // which shouldn't automatically happen - the user needs to configure some of those settings
+    //    // so that they play a part in managing their data collection.
+    //    // Also, the aircraft needs to be on a completely fixed joint, no translation or rotation
 
-        // Need to take the joint off so we can move the aircraft
-        RemoveJoint();
+    //    // Need to take the joint off so we can move the aircraft
+    //    RemoveJoint();
 
-        root.position = aircraftPosition_WindTunnel;
+    //    Root.position = aircraftPosition_WindTunnel;
 
-        AddFixedJoint();
+    //    AddFixedJoint();
 
-        // Check that the experiment script is there and enabled
-        SetWindTunnelExperimentActive(true);
-    }
+    //    // Check that the experiment script is there and enabled
+    //    SetWindTunnelExperimentActive(true);
+    //}
 
     void SetWindTunnelExperimentActive(bool active)
     {
@@ -173,15 +238,16 @@ public class ExperimentManager : MonoBehaviour
         aircraftRb.centerOfMass = aircraftRb.transform.InverseTransformPoint(centreOfGravity.position);
     }
 
+
     private void Awake()
     {
-        
+        forceBalance = GetComponent<ForceBalance>();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-
+        DoExperimentSetup();
     }
 
     // Update is called once per frame

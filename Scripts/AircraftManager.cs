@@ -4,20 +4,31 @@ using UnityEngine;
 
 public class AircraftManager : MonoBehaviour
 {
+    // Control settings
+    [Header("Control Polarity")]
+    public bool ReverseEvelevator;
+    public bool ReverseAileron;
+    public bool ReverseRudder;
+    public bool ReverseFlap;
+    public bool ReverseThrottle;
+
+    [Header("Control Trim")]
+    public float elevatorTrim, aileronTrim, rudderTrim;
+
     public bool isControlling = false;
+    public float camberScale = 0.05f;
 
     public Transform centreOfGravity;
     public Transform portAileron, starboardAileron, portElevator, starboardElevator, portFlap, starboardFlap;
     public WheelCollider noseGear;
     public AeroBody portWingOuter, portWingInner, starboardWingOuter, starboardWingInner, portTailPlane, starboardTailPlane;
     public Rigidbody rb;
-    public float elevatorTrim, aileronTrim, rudderTrim;
+    
     Quaternion portAileronTrim, starboardAileronTrim, portElevatorTrim, starboardElevatorTrim, starboardFlapTrim, portFlapTrim;
     public float maxControlThrow = 35; // in deg
     public float flapDelta; //high lift device deflection in deg
     public float maxThrust; //in N
     public float aileronDelta, elevatorDelta, rudderDelta, thrust; // control inputs indeg
-    ConfigurableJoint cj;
 
     public Thruster thruster;
     enum Flapsetting { up, down };
@@ -29,28 +40,22 @@ public class AircraftManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (isControlling)
-        {
-            portAileronTrim = portAileron.localRotation;
-            starboardAileronTrim = starboardAileron.localRotation;
-            portElevatorTrim = portElevator.localRotation;
-            starboardElevatorTrim = starboardElevator.localRotation;
-            portFlapTrim = portFlap.localRotation;
-            starboardFlapTrim = starboardFlap.localRotation;
-            //rudderTrim = rudderHinge.localRotation;
+        portAileronTrim = portAileron.localRotation;
+        starboardAileronTrim = starboardAileron.localRotation;
+        portElevatorTrim = portElevator.localRotation;
+        starboardElevatorTrim = starboardElevator.localRotation;
+        portFlapTrim = portFlap.localRotation;
+        starboardFlapTrim = starboardFlap.localRotation;
 
-            rb.centerOfMass = centreOfGravity.localPosition;
-            if (cj) { cj.anchor = centreOfGravity.localPosition; }
+        //rudderTrim = rudderHinge.localRotation;
 
-            // Setting this here just for ease
-            portWingInner.dynamicallyVariableShape = true;
-            portWingOuter.dynamicallyVariableShape = true;
-            starboardWingInner.dynamicallyVariableShape = true;
-            starboardWingOuter.dynamicallyVariableShape = true;
-            portTailPlane.dynamicallyVariableShape = true;
-            starboardTailPlane.dynamicallyVariableShape = true;
-        }
-
+        // Setting this here just for ease
+        portWingInner.dynamicallyVariableShape = true;
+        portWingOuter.dynamicallyVariableShape = true;
+        starboardWingInner.dynamicallyVariableShape = true;
+        starboardWingOuter.dynamicallyVariableShape = true;
+        portTailPlane.dynamicallyVariableShape = true;
+        starboardTailPlane.dynamicallyVariableShape = true;
     }
 
     // Update is called once per frame
@@ -58,36 +63,84 @@ public class AircraftManager : MonoBehaviour
     {
         if (isControlling)
         {
-            // Apply thrust input
-            thrust = Mathf.Clamp(maxThrust * Input.GetAxis("Thrust"), 0, maxThrust);
-            thruster.ApplyThrust(thrust);
-
-            // Get control flap inputs
-            aileronDelta = -maxControlThrow * Input.GetAxis("Aileron");
-            elevatorDelta = -maxControlThrow * Input.GetAxis("Elevator");
-            rudderDelta = -maxControlThrow * Input.GetAxis("Rudder");
-            if (Mathf.Sign(Input.GetAxis("Flap")) == 1) flapSetting = Flapsetting.down;
-            else flapSetting = Flapsetting.up;
-
-
-            // Apply control flap inputs
-            SetControlSurface(portAileron, portWingOuter, portAileronTrim, aileronDelta);
-            SetControlSurface(starboardAileron, starboardWingOuter, starboardAileronTrim, -aileronDelta);
-            SetControlSurface(portElevator, portTailPlane, portElevatorTrim, elevatorDelta + rudderDelta);
-            SetControlSurface(starboardElevator, starboardTailPlane, starboardElevatorTrim, elevatorDelta - rudderDelta);
-
-
-            //apply high lift devices if activated
-            if (flapSetting == Flapsetting.down) flapTarget = flapDelta;
-            else flapTarget = 0;
-
-            //apply nose gear rotation
-            noseGear.steerAngle = -rudderDelta;
-
-            flapAngle = Mathf.SmoothDamp(flapAngle, flapTarget, ref flapVelocity, flapDeployTime);
-            SetControlSurface(portFlap, portWingInner, portFlapTrim, flapAngle);
-            SetControlSurface(starboardFlap, starboardWingInner, starboardFlapTrim, flapAngle);
+            GetControlInputs();
+            ApplyControls();
         }
+    }
+
+    void GetControlInputs()
+    {
+        thrust = Mathf.Clamp(maxThrust * Input.GetAxis("Thrust"), 0, maxThrust);
+
+        // Get control flap inputs
+        aileronDelta = Mathf.Clamp(-maxControlThrow * Input.GetAxis("Aileron") - aileronTrim, -maxControlThrow, maxControlThrow);
+        elevatorDelta = Mathf.Clamp(-maxControlThrow * Input.GetAxis("Elevator") - elevatorTrim, -maxControlThrow, maxControlThrow);
+        rudderDelta = Mathf.Clamp(-maxControlThrow * Input.GetAxis("Rudder") - rudderTrim, -maxControlThrow, maxControlThrow);
+
+        // Flap is more like a button
+        if (Input.GetButtonDown("FlapDown"))
+        {
+            if (ReverseFlap)
+            {
+                flapSetting = Flapsetting.up;
+            }
+            else
+            {
+                flapSetting = Flapsetting.down;
+                
+            }
+        }
+        // No else here, could have both buttons pressed
+        if (Input.GetButtonDown("FlapUp"))
+        {
+            if (ReverseFlap)
+            {
+                flapSetting = Flapsetting.down;
+            }
+            else
+            {
+                flapSetting = Flapsetting.up;
+
+            }
+        }
+
+        // Funky switch expression
+        flapTarget = flapSetting switch
+        {
+            Flapsetting.up => 0,
+            Flapsetting.down => flapDelta,
+            _ => 0,
+        };
+
+        // Polarity
+        if (ReverseThrottle)
+            thrust *= -1f;
+        if (ReverseAileron)
+            aileronDelta *= -1f;
+        if (ReverseEvelevator)
+            elevatorDelta *= -1f;
+        if (ReverseRudder)
+            rudderDelta *= -1f;
+    }
+
+    void ApplyControls()
+    {
+        // Apply thrust input        
+        thruster.ApplyThrust(thrust);
+
+        // Apply control surface inputs
+        SetControlSurface(portAileron, portWingOuter, portAileronTrim, aileronDelta);
+        SetControlSurface(starboardAileron, starboardWingOuter, starboardAileronTrim, -aileronDelta);
+        SetControlSurface(portElevator, portTailPlane, portElevatorTrim, elevatorDelta + rudderDelta);
+        SetControlSurface(starboardElevator, starboardTailPlane, starboardElevatorTrim, elevatorDelta - rudderDelta);
+
+        //apply nose gear rotation
+        noseGear.steerAngle = -rudderDelta;
+
+        // Apply flap angles
+        flapAngle = Mathf.SmoothDamp(flapAngle, flapTarget, ref flapVelocity, flapDeployTime);
+        SetControlSurface(portFlap, portWingInner, portFlapTrim, flapAngle);
+        SetControlSurface(starboardFlap, starboardWingInner, starboardFlapTrim, flapAngle);
     }
 
     public void SetControlSurface(Transform hinge, AeroBody aeroBody, Quaternion trim, float delta)
@@ -102,7 +155,7 @@ public class AircraftManager : MonoBehaviour
 
         // Minus sign here, not sure who's got things the wrong way around...
         camber = -camber * Mathf.Deg2Rad;
-        aeroBody.camber = 0.1f * camber;
+        aeroBody.SetCamber(camberScale * camber);
     }
 
     public void SetElevatorDeflection(float delta)

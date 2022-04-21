@@ -54,23 +54,12 @@ public class WindTunnelExperiment : MonoBehaviour
     // The joint functions are on this script
     ForceBalance forceBalance;
 
-    // Quick plot to see what data we're getting
-    public AnimationCurve alphaClPlot;
-    public AnimationCurve alphaCdPlot;
-    public AnimationCurve clCmcgPlot;
-    public AnimationCurve dragPolarPlot;
-
     // Outputs from the force balance
     public Vector3 measuredForceCoefficients, measuredTorqueCoefficients, measuredForce, measuredTorque;
     
     // Used for taring the force balance
     public Vector3 forceZero, torqueZero;
 
-  
-    //public AeroBody aeroBody;
-    //public ThinAerofoilComponent thinAerofoil;
-    //public float aeroBodyAlpha, aerobodyCL;
-    //public Vector3 aeroBodyEarthFrameForce;
 
     public bool done;
 
@@ -98,15 +87,7 @@ public class WindTunnelExperiment : MonoBehaviour
         globalWind.Initialise();
 
         Debug.Log("Running wind tunnel experiments");
-        // Calculate the step size for alpha given the range and number of points
-        alphaIncrement = (alphaMax - alphaMin) / numberOfAlphaPoints;
-        alpha = alphaMin;
-
-        // Clear the curve plots
-        alphaClPlot = new AnimationCurve();
-        alphaCdPlot = new AnimationCurve();
-        dragPolarPlot = new AnimationCurve();
-        clCmcgPlot = new AnimationCurve();
+        
 
         StartCoroutine(GetAircraftData());
     }
@@ -149,12 +130,13 @@ public class WindTunnelExperiment : MonoBehaviour
         // alpha, Cd, Cl (for the range of flap deflections), Cm (range of elevator deflections)
 
         // Start with alpha
-        string header = "alpha\tCd at trim\t";
+        string header = "alpha\t";
 
         // Append the Cl at flap deflections
         foreach (float deflection in flapDeflections)
         {
             header += "Cl for flap at " + deflection.ToString("F2") + "\t";
+            header += "Cd for flap at " + deflection.ToString("F2") + "\t";
         }
 
         // Append Cm at elevator deflections
@@ -183,8 +165,11 @@ public class WindTunnelExperiment : MonoBehaviour
         File.WriteAllText(path, header);
 
         float oldDt = Time.fixedDeltaTime;
-        Time.fixedDeltaTime = 0.005f;
+        Time.fixedDeltaTime = 0.001f;
 
+        // Calculate the step size for alpha given the range and number of points
+        alphaIncrement = (alphaMax - alphaMin) / (numberOfAlphaPoints-1);
+        alpha = alphaMin;
 
         // Wait for the physics to simulate
         yield return new WaitForFixedUpdate();
@@ -205,6 +190,12 @@ public class WindTunnelExperiment : MonoBehaviour
             // Set the angle of attack by rotating the aircraft - note this isn't rotating about the CG
             SetAircraftRotation(alpha);
 
+            globalWind.windSpeed = 0;
+
+            // Turn off the wind to tare the force balance
+            globalWind.SetWindVelocity();
+            yield return new WaitForFixedUpdate();
+
             // Re-tare the force balance - maybe not necessary to do with every rotation?
             forceBalance.Tare();
 
@@ -223,16 +214,6 @@ public class WindTunnelExperiment : MonoBehaviour
             manager.controller.SetElevatorDeflection(elevatorDeflections[0]);
             SetCgPosition(cgPositions[0]);
 
-            // Wait for the physics to simulate
-            yield return new WaitForFixedUpdate();
-
-            // Measure the force acting on the joint
-            MeasureForces();
-
-            float Cd = measuredForceCoefficients.z;
-
-            data += Cd.ToString("F4") + "\t";
-
             // Iterate through the Cl values
             foreach (float deflection in flapDeflections)
             {
@@ -248,6 +229,9 @@ public class WindTunnelExperiment : MonoBehaviour
                 // Get the coefficients
                 float Cl = measuredForceCoefficients.y;
                 data += Cl.ToString("F4") + "\t";
+
+                float Cd = measuredForceCoefficients.z;
+                data += Cd.ToString("F4") + "\t";
             }
 
             // Revert to trim
@@ -288,17 +272,6 @@ public class WindTunnelExperiment : MonoBehaviour
                 float Cm_cg = measuredTorqueCoefficients.x;
                 data += Cm_cg.ToString("F4") + "\t";
             }
-
-            //// Add the measured data to the curve plots
-            //alphaClPlot.AddKey(alpha, Cl);
-            //alphaCdPlot.AddKey(alpha, Cd);
-
-            //// Only want the linear portion of the drag polar
-            //if (alpha < 9f)
-            //{
-            //    clCmcgPlot.AddKey(Cl, Cm_cg);
-            //    dragPolarPlot.AddKey(Cl, Cd);
-            //}
 
             data += "\n";
 

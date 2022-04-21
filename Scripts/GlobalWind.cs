@@ -25,9 +25,6 @@ public class GlobalWind : MonoBehaviour
 
     float airDensity = 1.2f;
 
-
-    public static string NewLine { get; internal set; }
-
     AeroBody[] aeroBodies;
 
     // Start is called before the first frame update
