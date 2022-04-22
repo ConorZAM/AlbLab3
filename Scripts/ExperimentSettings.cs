@@ -19,4 +19,5 @@ public class ExperimentSettings : ScriptableObject
     public Vector3 cameraEulerAngles;
     public JointState jointState = JointState.Fixed;
     public string DataManagerName = "Name of GameObject";
+    public Vector3 aircraftSpeed = Vector3.zero;
 }

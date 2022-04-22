@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
-[RequireComponent(typeof(ExperimentManager))]
 public class WindTunnelExperiment : MonoBehaviour
 {
     // I've changed this because I want the name of the script - sorry!
@@ -27,14 +26,14 @@ public class WindTunnelExperiment : MonoBehaviour
     public float cgHeight = -0.03f;
 
     // Manager handles the wiring of public things like rigid body and CG location
-    ExperimentManager manager;
+    ExperimentManager Manager { get { return ExperimentManager.Singleton(); } }
 
     // Global Wind sets the external wind velocity for all aero bodies in the scene, only gets the bodies
     // when the simulation starts though - don't add aero bodies while the simulation is running
-    GlobalWind globalWind { get { return manager.globalWind; } }
+    GlobalWind GlobalWind { get { return Manager.globalWind; } }
 
     // This is the transform we'll position and rotate throughout the experiments
-    Transform aircraftRoot { get { return manager.aircraftRb.transform.root; } }
+    Transform AircraftRoot { get { return Manager.aircraftRb.transform.root; } }
 
     // Going to run through a range of angle of attack values - DEGREES!!!
     public float alphaMin, alphaMax;
@@ -70,21 +69,21 @@ public class WindTunnelExperiment : MonoBehaviour
 
     private void Awake()
     {
-        manager = GetComponent<ExperimentManager>();
+        //Manager = GetComponent<ExperimentManager>();
     }
 
     private void Reset()
     {
-        manager = GetComponent<ExperimentManager>();
+        //Manager = GetComponent<ExperimentManager>();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        forceBalance = GetComponent<ForceBalance>();
+        forceBalance = FindObjectOfType<ForceBalance>();
         forceBalance.SetJointMode(ForceBalance.JointMode.Fixed);
 
-        globalWind.Initialise();
+        GlobalWind.Initialise();
 
         Debug.Log("Running wind tunnel experiments");
         
@@ -94,7 +93,9 @@ public class WindTunnelExperiment : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(done)
+        Debug.Log("uh");
+
+        if (done)
             MeasureForces();
     }
 
@@ -116,10 +117,10 @@ public class WindTunnelExperiment : MonoBehaviour
         forceBalance.RemoveJoint();
 
         // Move the position marker
-        manager.centreOfGravity.position = manager.leadingEdge.TransformPoint(new Vector3(0,cgHeight,offset));
+        Manager.centreOfGravity.position = Manager.leadingEdge.TransformPoint(new Vector3(0,cgHeight,offset));
 
         // Update the rigid body as well
-        manager.UpdateAircraftCg();
+        Manager.UpdateAircraftCg();
 
         forceBalance.AddJoint();
     }
@@ -156,13 +157,18 @@ public class WindTunnelExperiment : MonoBehaviour
 
     public IEnumerator GetAircraftData()
     {
+        Debug.Log(0);
         // Create the data file and put the header in
         FileStream f = File.Create(path);
         f.Close();
 
+        
+
         string header = GenerateFileHeader();
         header += '\n';
         File.WriteAllText(path, header);
+
+        
 
         float oldDt = Time.fixedDeltaTime;
         Time.fixedDeltaTime = 0.001f;
@@ -171,8 +177,12 @@ public class WindTunnelExperiment : MonoBehaviour
         alphaIncrement = (alphaMax - alphaMin) / (numberOfAlphaPoints-1);
         alpha = alphaMin;
 
+        Debug.Log("uh");
+
         // Wait for the physics to simulate
         yield return new WaitForFixedUpdate();
+
+        Debug.Log(1);
 
         // Iterate over the angle of attack range
         for (int i = 0; i < numberOfAlphaPoints; i++)
@@ -190,35 +200,38 @@ public class WindTunnelExperiment : MonoBehaviour
             // Set the angle of attack by rotating the aircraft - note this isn't rotating about the CG
             SetAircraftRotation(alpha);
 
-            globalWind.windSpeed = 0;
+            GlobalWind.windSpeed = 0;
 
             // Turn off the wind to tare the force balance
-            globalWind.SetWindVelocity();
+            GlobalWind.SetWindVelocity();
             yield return new WaitForFixedUpdate();
 
             // Re-tare the force balance - maybe not necessary to do with every rotation?
             forceBalance.Tare();
 
             // Make sure the wind settings are correct
-            globalWind.windAzimuth = 180;
-            globalWind.windElevation = 0;
-            globalWind.windSpeed = 10;
-            q = 0.5f * density * globalWind.windSpeed * globalWind.windSpeed;
+            GlobalWind.windAzimuth = 180;
+            GlobalWind.windElevation = 0;
+            GlobalWind.windSpeed = 10;
+            q = 0.5f * density * GlobalWind.windSpeed * GlobalWind.windSpeed;
 
             // Apply the wind settings to all aero bodies in the scene
-            globalWind.SetWindVelocity();
+            GlobalWind.SetWindVelocity();
 
             // Set trim settings
             // The "trim" angles for the flaps are the first items in the lists
-            manager.controller.SetFlapDeflection(flapDeflections[0]);
-            manager.controller.SetElevatorDeflection(elevatorDeflections[0]);
+            Manager.controller.SetFlapDeflection(flapDeflections[0]);
+            Manager.controller.SetElevatorDeflection(elevatorDeflections[0]);
             SetCgPosition(cgPositions[0]);
+
+            Debug.Log(2);
+
 
             // Iterate through the Cl values
             foreach (float deflection in flapDeflections)
             {
                 // Set the flap deflection
-                manager.controller.SetFlapDeflection(deflection);
+                Manager.controller.SetFlapDeflection(deflection);
 
                 // Wait for the physics to simulate
                 yield return new WaitForFixedUpdate();
@@ -235,13 +248,13 @@ public class WindTunnelExperiment : MonoBehaviour
             }
 
             // Revert to trim
-            manager.controller.SetFlapDeflection(flapDeflections[0]);
+            Manager.controller.SetFlapDeflection(flapDeflections[0]);
 
             // Iterate through the Cm values
             foreach (float deflection in elevatorDeflections)
             {
                 // Set the flap deflection
-                manager.controller.SetElevatorDeflection(deflection);
+                Manager.controller.SetElevatorDeflection(deflection);
 
                 // Wait for the physics to simulate
                 yield return new WaitForFixedUpdate();
@@ -255,7 +268,7 @@ public class WindTunnelExperiment : MonoBehaviour
             }
 
             // Revert to trim
-            manager.controller.SetElevatorDeflection(elevatorDeflections[0]);
+            Manager.controller.SetElevatorDeflection(elevatorDeflections[0]);
 
             // Iterate through the Cm values
             foreach (float position in cgPositions)
@@ -275,9 +288,14 @@ public class WindTunnelExperiment : MonoBehaviour
 
             data += "\n";
 
+            Debug.Log(3);
+
+
             File.AppendAllText(path, data);
             // Increment the angle of attack for the next run
             alpha += alphaIncrement;
+
+            Debug.Log(4);
         }
 
         done = true;
@@ -288,14 +306,14 @@ public class WindTunnelExperiment : MonoBehaviour
     public void SetAircraftRotation(Quaternion rotation)
     {
         forceBalance.RemoveJoint();
-        aircraftRoot.rotation = rotation;
+        AircraftRoot.rotation = rotation;
         forceBalance.AddJoint();
     }
 
     public void SetAircraftRotation(float _alpha)
     {
         forceBalance.RemoveJoint();
-        aircraftRoot.rotation = Quaternion.Euler(-_alpha, 0, 0);
+        AircraftRoot.rotation = Quaternion.Euler(-_alpha, 0, 0);
         forceBalance.AddJoint();
     }
 

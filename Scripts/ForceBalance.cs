@@ -8,7 +8,7 @@ public class ForceBalance : MonoBehaviour
 {
     [HideInInspector]
     public ConfigurableJoint joint;
-    ExperimentManager manager;
+    ExperimentManager Manager { get { return ExperimentManager.Singleton(); } }
 
     [Header("Force Readings")]
     public Vector3 totalForce;
@@ -24,12 +24,12 @@ public class ForceBalance : MonoBehaviour
         Free
     }
 
+    // Honestly I don't know which joint setter I'm using now... I need to make a JointSetter or something
+    [HideInInspector]
     public JointMode jointMode;
 
     public void SetJointMode(JointMode _jointMode)
     {
-        manager = GetComponent<ExperimentManager>();
-
         jointMode = _jointMode;
 
         AddJoint();
@@ -90,13 +90,13 @@ public class ForceBalance : MonoBehaviour
 
     void UpdateAircraftCg()
     {
-        manager.aircraftRb.centerOfMass = manager.aircraftRb.transform.InverseTransformPoint(manager.centreOfGravity.position);
+        Manager.aircraftRb.centerOfMass = Manager.aircraftRb.transform.InverseTransformPoint(Manager.centreOfGravity.position);
     }
 
     private void SetJointAnchor()
     {
-        joint.anchor = manager.aircraftRb.centerOfMass;
-        joint.connectedAnchor = manager.aircraftRb.worldCenterOfMass;
+        joint.anchor = Manager.aircraftRb.centerOfMass;
+        joint.connectedAnchor = Manager.aircraftRb.worldCenterOfMass;
     }
 
     private void SetJointFree()
@@ -142,17 +142,17 @@ public class ForceBalance : MonoBehaviour
             return;
         }
 
-        joint = manager.aircraftRb.gameObject.GetComponent<ConfigurableJoint>();
+        joint = Manager.aircraftRb.gameObject.GetComponent<ConfigurableJoint>();
         if (joint == null)
         {
-            joint = manager.aircraftRb.gameObject.AddComponent<ConfigurableJoint>();
+            joint = Manager.aircraftRb.gameObject.AddComponent<ConfigurableJoint>();
         }
         SetJointMode(jointMode);
     }
 
     public void RemoveJoint()
     {
-        joint = manager.aircraftRb.gameObject.GetComponent<ConfigurableJoint>();
+        joint = Manager.aircraftRb.gameObject.GetComponent<ConfigurableJoint>();
         if (joint != null)
         {
             DestroyImmediate(joint);
@@ -161,11 +161,11 @@ public class ForceBalance : MonoBehaviour
 
     private void Reset()
     {
-        manager = GetComponent<ExperimentManager>();
+        //manager = GetComponent<ExperimentManager>();
     }
 
     private void Awake()
     {
-        manager = GetComponent<ExperimentManager>();
+        //manager = GetComponent<ExperimentManager>();
     }
 }

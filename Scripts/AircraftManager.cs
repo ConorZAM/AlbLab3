@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class AircraftManager : MonoBehaviour
 {
+    [Tooltip("Enables Keyboard Inputs")]
+    public bool usePilotControls = false;
+
     // Control settings
     [Header("Control Polarity")]
     public bool ReverseEvelevator;
@@ -13,33 +16,39 @@ public class AircraftManager : MonoBehaviour
     public bool ReverseThrottle;
 
     [Header("Control Trim")]
-    public float elevatorTrim, aileronTrim, rudderTrim;
+    public float elevatorTrim;
+    public float aileronTrim, rudderTrim;
 
-    public bool isControlling = false;
-    public float camberScale = 0.05f;
-
-    public Transform centreOfGravity;
-    public Transform portAileron, starboardAileron, portElevator, starboardElevator, portFlap, starboardFlap;
-    public WheelCollider noseGear;
-    public AeroBody portWingOuter, portWingInner, starboardWingOuter, starboardWingInner, portTailPlane, starboardTailPlane;
-    public Rigidbody rb;
-    
-    Quaternion portAileronTrim, starboardAileronTrim, portElevatorTrim, starboardElevatorTrim, starboardFlapTrim, portFlapTrim;
+    [Header("Control Limits")]
     public float maxControlThrow = 35; // in deg
     public float flapDelta; //high lift device deflection in deg
     public float maxThrust; //in N
-    public float aileronDelta, elevatorDelta, rudderDelta, thrust; // control inputs indeg
+    public float flapDeployTime;
 
-    public Thruster thruster;
+    [Header("Components")]
+    public Transform portAileron;
+    public Transform starboardAileron, portElevator, starboardElevator, portFlap, starboardFlap;
+    public WheelCollider noseGear;
+    public AeroBody portWingOuter, portWingInner, starboardWingOuter, starboardWingInner, portTailPlane, starboardTailPlane;
+    
+    // Other settings
+    Quaternion portAileronTrim, starboardAileronTrim, portElevatorTrim, starboardElevatorTrim, starboardFlapTrim, portFlapTrim;
+    float camberScale = 0.05f;
+    [HideInInspector]
+    public float aileronDelta, elevatorDelta, rudderDelta, thrust; // control inputs in deg
+
+    Thruster thruster;
     enum Flapsetting { up, down };
     Flapsetting flapSetting = Flapsetting.up;
     float flapAngle = 0;
     float flapVelocity, flapTarget;
-    public float flapDeployTime;
+    
 
     // Start is called before the first frame update
     void Start()
     {
+        thruster = FindObjectOfType<Thruster>();
+
         portAileronTrim = portAileron.localRotation;
         starboardAileronTrim = starboardAileron.localRotation;
         portElevatorTrim = portElevator.localRotation;
@@ -61,7 +70,7 @@ public class AircraftManager : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (isControlling)
+        if (usePilotControls)
         {
             GetControlInputs();
             ApplyControls();

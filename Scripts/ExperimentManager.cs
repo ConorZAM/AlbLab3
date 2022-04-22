@@ -12,16 +12,17 @@ public class ExperimentManager : MonoBehaviour
      * - Scene transition to free flight mode
      */
 
-    public enum ExperimentSetting
+    static ExperimentManager _singleton;
+    public static ExperimentManager Singleton()
     {
-        WindTunnelStatic,
-        WindTunnelLongitudinalDynamics,
-        WindTunnelLateralDynamics,
-        WindTunnelGimbal,
-        FreeFlight
+        if (_singleton == null)
+        {
+            _singleton = FindObjectOfType<ExperimentManager>();
+        }
+        return _singleton;
     }
 
-    public ExperimentSetting experimentSetting;
+
     [Range(0f, 100f)]
     public float CgAsPercentageOfMac;
     float MacLength = 0.233f;
@@ -39,10 +40,9 @@ public class ExperimentManager : MonoBehaviour
 
     public ExperimentSettings Settings;
 
-    ForceBalance forceBalance;
-
     public void SetCgPosition(float offset)
     {
+        ForceBalance forceBalance = GetComponent<ForceBalance>();
         forceBalance.RemoveJoint();
 
         // Move the position marker
@@ -62,9 +62,20 @@ public class ExperimentManager : MonoBehaviour
         Camera.main.transform.position = Settings.cameraPosition;
         Camera.main.transform.eulerAngles = Settings.cameraEulerAngles;
 
+
+        // Have to use the active Data Loggers object first
+        GameObject loggers = GameObject.Find("Data Loggers");
+
+        // Disable all children
+        for (int i = 0; i < loggers.transform.childCount; i++)
+        {
+            loggers.transform.GetChild(i).gameObject.SetActive(false);
+        }
+
         if (Settings.DataManagerName != "None")
         {
-            GameObject.Find(Settings.DataManagerName).SetActive(true);
+            // I don't have a clue why this works
+            loggers.transform.Find(Settings.DataManagerName).gameObject.SetActive(true);
         }
 
         // Apply the joint
@@ -93,8 +104,8 @@ public class ExperimentManager : MonoBehaviour
                 AddFixedJoint();
                 break;
         }
-        
-        
+
+
 
 
         //switch (experimentSetting)
@@ -223,15 +234,15 @@ public class ExperimentManager : MonoBehaviour
     //    SetWindTunnelExperimentActive(true);
     //}
 
-    void SetWindTunnelExperimentActive(bool active)
-    {
-        // Check that the experiment script is there and enabled
-        WindTunnelExperiment windTunnelExperiment = GetComponent<WindTunnelExperiment>();
-        if (windTunnelExperiment)
-        {
-            windTunnelExperiment.enabled = active;
-        }
-    }
+    //void SetWindTunnelExperimentActive(bool active)
+    //{
+    //    // Check that the experiment script is there and enabled
+    //    WindTunnelExperiment windTunnelExperiment = GetComponent<WindTunnelExperiment>();
+    //    if (windTunnelExperiment)
+    //    {
+    //        windTunnelExperiment.enabled = active;
+    //    }
+    //}
 
     public void UpdateAircraftCg()
     {
@@ -241,7 +252,24 @@ public class ExperimentManager : MonoBehaviour
 
     private void Awake()
     {
-        forceBalance = GetComponent<ForceBalance>();
+        GetSingleton();
+    }
+
+    private void Reset()
+    {
+        GetSingleton();
+    }
+
+    void GetSingleton()
+    {
+        if (_singleton != null && _singleton != this)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            _singleton = this;
+        }
     }
 
     // Start is called before the first frame update

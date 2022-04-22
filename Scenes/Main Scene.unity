@@ -745,6 +745,40 @@ Transform:
   m_Father: {fileID: 474423185}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &351110980
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 351110981}
+  m_Layer: 0
+  m_Name: Data Loggers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &351110981
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 351110980}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 799863326}
+  - {fileID: 411557456}
+  - {fileID: 1175777196}
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &400116618
 GameObject:
   m_ObjectHideFlags: 0
@@ -1191,7 +1225,7 @@ GameObject:
   - component: {fileID: 411557456}
   - component: {fileID: 411557455}
   m_Layer: 0
-  m_Name: Data Streamer
+  m_Name: Aircraft Angles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1209,7 +1243,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5b373bc676ae8a4ea1a9d7aabe25cb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manager: {fileID: 1219250186}
 --- !u!4 &411557456
 Transform:
   m_ObjectHideFlags: 0
@@ -1218,12 +1251,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 411557454}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10, y: 2.2395, z: -35.46}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_Father: {fileID: 351110981}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &423822402
 GameObject:
@@ -1316,7 +1349,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 474423184}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.00000023841858, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1466,7 +1499,7 @@ ConfigurableJoint:
   m_GameObject: {fileID: 474423184}
   m_ConnectedBody: {fileID: 0}
   m_ConnectedArticulationBody: {fileID: 0}
-  m_Anchor: {x: 0, y: 0.25620008, z: -0.27799988}
+  m_Anchor: {x: 0, y: 0.2539699, z: -0.46208954}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
   m_ConnectedAnchor: {x: 0, y: 0, z: 0}
@@ -1475,9 +1508,9 @@ ConfigurableJoint:
   m_XMotion: 0
   m_YMotion: 0
   m_ZMotion: 0
-  m_AngularXMotion: 0
-  m_AngularYMotion: 0
-  m_AngularZMotion: 0
+  m_AngularXMotion: 2
+  m_AngularYMotion: 2
+  m_AngularZMotion: 2
   m_LinearLimitSpring:
     spring: 0
     damper: 0
@@ -1606,11 +1639,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7191342776425833837, guid: 66a4f404448add44ebd1f46a8eceeefd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.23950005
+      value: 0.2539699
       objectReference: {fileID: 0}
     - target: {fileID: 7191342776425833837, guid: 66a4f404448add44ebd1f46a8eceeefd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.45999908
+      value: -0.46208954
       objectReference: {fileID: 0}
     - target: {fileID: 7191342776425833837, guid: 66a4f404448add44ebd1f46a8eceeefd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2030,6 +2063,86 @@ MonoBehaviour:
   rb: {fileID: 474423186}
   propellerHub: {fileID: 2052749023}
   spinScale: 50
+--- !u!1 &799863324
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 799863326}
+  - component: {fileID: 799863325}
+  m_Layer: 0
+  m_Name: Wind Tunnel Data
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &799863325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 799863324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23256517ad4202143a03b1e884f340b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  path: Unity Data.txt
+  wingArea: 0.8
+  chord: 0.5
+  density: 1.2
+  q: 0
+  cgHeight: -0.03
+  alphaMin: -5
+  alphaMax: 20
+  numberOfAlphaPoints: 100
+  cgMin: 0
+  cgMax: 0
+  numberOfCgPoints: 0
+  elevatorDeflections:
+  - 0
+  - 20
+  - 40
+  rudderMin: 0
+  rudderMax: 0
+  numberOfRudderPoints: 0
+  flapDeflections:
+  - 0
+  - 20
+  - 40
+  cgPositions:
+  - -0.05
+  - -0.1
+  - 0
+  - 0.1
+  measuredForceCoefficients: {x: 0, y: 0, z: 0}
+  measuredTorqueCoefficients: {x: 0, y: 0, z: 0}
+  measuredForce: {x: 0, y: 0, z: 0}
+  measuredTorque: {x: 0, y: 0, z: 0}
+  forceZero: {x: 0, y: 0, z: 0}
+  torqueZero: {x: 0, y: 0, z: 0}
+  done: 0
+  desiredAlpha: 0
+--- !u!4 &799863326
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 799863324}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 351110981}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &848015024
 GameObject:
   m_ObjectHideFlags: 0
@@ -2262,8 +2375,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.6, y: 2.8, z: -42.6}
+  m_LocalRotation: {x: 0.22495104, y: 0, z: 0, w: 0.97437006}
+  m_LocalPosition: {x: 10, y: 4, z: -40}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2484,6 +2597,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9b1eac7aa9fa1646b2c66666fcefb49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  usePilotControls: 0
   ReverseEvelevator: 0
   ReverseAileron: 0
   ReverseRudder: 0
@@ -2492,9 +2606,10 @@ MonoBehaviour:
   elevatorTrim: 0
   aileronTrim: 0
   rudderTrim: 0
-  isControlling: 1
-  camberScale: 0.05
-  centreOfGravity: {fileID: 491488497}
+  maxControlThrow: 20
+  flapDelta: -40
+  maxThrust: 25
+  flapDeployTime: 0.5
   portAileron: {fileID: 888370518}
   starboardAileron: {fileID: 70868554}
   portElevator: {fileID: 185572113}
@@ -2508,16 +2623,10 @@ MonoBehaviour:
   starboardWingInner: {fileID: 404530941}
   portTailPlane: {fileID: 2099852165}
   starboardTailPlane: {fileID: 302523727}
-  rb: {fileID: 474423186}
-  maxControlThrow: 20
-  flapDelta: -40
-  maxThrust: 25
-  aileronDelta: 0
-  elevatorDelta: 0
-  rudderDelta: 0
+  aileronDelta: 3.63
+  elevatorDelta: -10.62
+  rudderDelta: -0
   thrust: 0
-  thruster: {fileID: 673487449}
-  flapDeployTime: 0.5
 --- !u!1 &1175589830
 GameObject:
   m_ObjectHideFlags: 0
@@ -2553,6 +2662,50 @@ Transform:
   m_Father: {fileID: 474423185}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1175777195
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1175777196}
+  - component: {fileID: 1175777197}
+  m_Layer: 0
+  m_Name: Data Streamer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1175777196
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1175777195}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 351110981}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1175777197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1175777195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5b373bc676ae8a4ea1a9d7aabe25cb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1219250183
 GameObject:
   m_ObjectHideFlags: 0
@@ -2564,7 +2717,6 @@ GameObject:
   - component: {fileID: 1219250187}
   - component: {fileID: 1219250186}
   - component: {fileID: 1219250185}
-  - component: {fileID: 1219250184}
   m_Layer: 0
   m_Name: Experiment Manager
   m_TagString: Untagged
@@ -2572,54 +2724,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1219250184
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1219250183}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23256517ad4202143a03b1e884f340b7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  path: Unity Data.txt
-  wingArea: 0.8
-  chord: 0.5
-  density: 1.2
-  q: 0
-  cgHeight: -0.03
-  alphaMin: -5
-  alphaMax: 20
-  numberOfAlphaPoints: 100
-  cgMin: 0
-  cgMax: 0
-  numberOfCgPoints: 0
-  elevatorDeflections:
-  - 0
-  - 20
-  - 40
-  rudderMin: 0
-  rudderMax: 0
-  numberOfRudderPoints: 0
-  flapDeflections:
-  - 0
-  - 20
-  - 40
-  cgPositions:
-  - -0.05
-  - -0.1
-  - 0
-  - 0.1
-  measuredForceCoefficients: {x: 0, y: 0, z: 0}
-  measuredTorqueCoefficients: {x: 0, y: 0, z: 0}
-  measuredForce: {x: 0, y: 0, z: 0}
-  measuredTorque: {x: 0, y: 0, z: 0}
-  forceZero: {x: 0, y: 0, z: 0}
-  torqueZero: {x: 0, y: 0, z: 0}
-  done: 0
-  desiredAlpha: 0
 --- !u!114 &1219250185
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2652,7 +2756,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d28d56d54d25f145990297d2f9d8f90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  experimentSetting: 0
   CgAsPercentageOfMac: 25
   joint: {fileID: 474423189}
   aircraftRb: {fileID: 474423186}

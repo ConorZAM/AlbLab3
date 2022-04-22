@@ -69,8 +69,10 @@ public class ThinAerofoilComponent : AerodynamicComponent
 
         // Sigmoid function for blending between pre and post stall
         // Wasting some calulcations here by converting to degrees...
-        upperSigmoid = 1f / (1f + Mathf.Exp((stallAngle + Mathf.Rad2Deg * effective_alpha) * stallSharpness));
-        lowerSigmoid = 1f / (1f + Mathf.Exp((-stallAngle + Mathf.Rad2Deg * effective_alpha) * stallSharpness));
+
+        // REMOVED EFFECTIVE ALPHA HERE
+        upperSigmoid = 1f / (1f + Mathf.Exp((stallAngle + Mathf.Rad2Deg * aeroBody.alpha) * stallSharpness));
+        lowerSigmoid = 1f / (1f + Mathf.Exp((-stallAngle + Mathf.Rad2Deg * aeroBody.alpha) * stallSharpness));
         preStallFilter = lowerSigmoid - upperSigmoid;
 
         CL = preStallFilter * CL_preStall + (1 - preStallFilter) * CL_postStall;
