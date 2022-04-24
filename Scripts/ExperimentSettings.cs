@@ -14,7 +14,7 @@ public class ExperimentSettings : ScriptableObject
     };
     // Everything we need for setting up the scene
 
-    public Vector3 aircraftPosition = new Vector3(10, 2, -35);
+    public Vector3 aircraftPosition = new Vector3(13, 7, 25);
     public Vector3 cameraPosition;
     public Vector3 cameraEulerAngles;
     public JointState jointState = JointState.Fixed;
