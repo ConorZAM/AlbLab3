@@ -432,6 +432,7 @@ public class MFDScript : MonoBehaviour
             //Updates current Engine RPM
             //engine = MainMFD.current.engine;
             engine = aircraftManager.thrust;
+            
 
             //Send values to Gui and Instruments
             if (engineRollDigit != null) engineRollDigit.setValue(engine);

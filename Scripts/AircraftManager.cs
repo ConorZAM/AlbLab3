@@ -25,6 +25,11 @@ public class AircraftManager : MonoBehaviour
     public float maxThrust; //in N
     public float flapDeployTime;
 
+    [Header("Aircraft Visuals")]
+    public Material aircraftMaterial;
+    [Range(0, 1)]
+    public float bodyTransparency;
+
     [Header("Components")]
     public Transform portAileron;
     public Transform starboardAileron, portElevator, starboardElevator, portFlap, starboardFlap;
@@ -65,6 +70,11 @@ public class AircraftManager : MonoBehaviour
         starboardWingOuter.dynamicallyVariableShape = true;
         portTailPlane.dynamicallyVariableShape = true;
         starboardTailPlane.dynamicallyVariableShape = true;
+
+        //change aircraft transparency
+        var col = aircraftMaterial.color;
+        col.a = bodyTransparency;
+        aircraftMaterial.color = col;
     }
 
     // Update is called once per frame
@@ -86,6 +96,7 @@ public class AircraftManager : MonoBehaviour
         elevatorDelta = Mathf.Clamp(-maxControlThrow * Input.GetAxis("Elevator") - elevatorTrim, -maxControlThrow, maxControlThrow);
         rudderDelta = Mathf.Clamp(-maxControlThrow * Input.GetAxis("Rudder") - rudderTrim, -maxControlThrow, maxControlThrow);
 
+        
         // Flap is more like a button
         if (Input.GetButtonDown("FlapDown"))
         {

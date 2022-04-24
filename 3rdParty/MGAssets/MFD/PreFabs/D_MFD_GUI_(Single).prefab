@@ -6296,6 +6296,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec9839e0b2e77554784ce1423c40d8ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  aircraftManager: {fileID: 0}
   isActive: 1
   aircraft: {fileID: 0}
   aircraftRB: {fileID: 0}

@@ -23,7 +23,7 @@ public class ExperimentManager : MonoBehaviour
     }
 
 
-    [Range(0f, 100f)]
+    [Range(-100f, 100f)]
     public float CgAsPercentageOfMac;
     float MacLength = 0.233f;
     float verticalCgOffset;
@@ -46,7 +46,7 @@ public class ExperimentManager : MonoBehaviour
         forceBalance.RemoveJoint();
 
         // Move the position marker
-        centreOfGravity.position = leadingEdge.TransformPoint(new Vector3(0, verticalCgOffset, offset));
+        centreOfGravity.position = leadingEdge.TransformPoint(new Vector3(0,centreOfGravity.localPosition.y, offset));
 
         // Update the rigid body as well
         UpdateAircraftCg();

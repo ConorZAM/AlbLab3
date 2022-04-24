@@ -17,4 +17,4 @@ MonoBehaviour:
   cameraEulerAngles: {x: 26, y: 0, z: 0}
   jointState: 3
   DataManagerName: Aircraft Angles
-  aircraftSpeed: {x: 0, y: 0, z: 0}
+  aircraftSpeed: {x: 0, y: 0, z: -10}

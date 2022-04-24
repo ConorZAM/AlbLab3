@@ -12,11 +12,12 @@ using UnityEngine.UI;
 public class MainMFD : MonoBehaviour
 {
     public static MainMFD current;
-
+    public AircraftManager aircraftManager;
 
     //Config Variables
     [Header("Aircraft MFD")]
     public bool isActive = false;
+    
 
     [Tooltip("Link your Aircraft Transform here!")] public Transform aircraft;
     [Tooltip("If your Aircraft have a RigidBody, link it here!")] public Rigidbody aircraftRB;
@@ -720,6 +721,7 @@ public class MainMFD : MonoBehaviour
             if (autoRPM) engineTarget = Mathf.Abs(idleEngine / engineAmplitude + speed / maxSpeed * (1 - idleEngine / engineAmplitude)); //if (autoRPM) engineTarget = Mathf.Abs(speed / maxSpeed + idleEngine / engineAmplitude);
             if (useFuel && fuelReNormalized < 0.01f) engineTarget = 0;
             //
+            engineTarget = aircraftManager.thrust / aircraftManager.maxThrust;
 
             //Updates current Engine RPM
             engineTarget = Mathf.Clamp01(Mathf.Abs(engineTarget));
