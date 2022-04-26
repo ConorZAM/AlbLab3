@@ -7,6 +7,11 @@ public class AircraftManager : MonoBehaviour
     [Tooltip("Enables Keyboard Inputs")]
     public bool usePilotControls = false;
 
+    [Header("Aircraft inertial properties")]
+    public Rigidbody aircraftRigidBody;
+    public float mass;
+    public Vector3 inertiaTensor;
+
     // Control settings
     [Header("Control Polarity")]
     public bool ReverseEvelevator;
@@ -54,6 +59,8 @@ public class AircraftManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        aircraftRigidBody.mass = mass;
+        aircraftRigidBody.inertiaTensor = inertiaTensor;
         thruster = FindObjectOfType<Thruster>();
 
         portAileronTrim = portAileron.localRotation;
