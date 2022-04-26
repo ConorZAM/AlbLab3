@@ -51,7 +51,7 @@ namespace NWH
         {
             get
             {
-                return EditorPrefs.GetInt("GrapherSharedVerticalResolution", 0);
+                return EditorPrefs.GetInt("GrapherSharedVerticalResolution", 1);
             }
             set
             {
@@ -87,7 +87,7 @@ namespace NWH
         {
             get
             {
-                return EditorPrefs.GetFloat("GrapherDefaultVerticalResolution", 10);
+                return EditorPrefs.GetFloat("GrapherDefaultVerticalResolution", 180);
             }
             set
             {

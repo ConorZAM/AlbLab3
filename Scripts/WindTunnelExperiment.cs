@@ -19,10 +19,18 @@ public class WindTunnelExperiment : MonoBehaviour
 
 
     // Where to save the file
-    public string path = "Unity Wind Tunnel Data.txt";
+    private readonly string path = "Assets\\Unity Wind Tunnel Data.txt";
+
+    [Header("Increase this value to slow down the experiment visuals")]
+    [Range(1f, 100f)]
+    public float slowDownFactor = 1f;
 
     // Properties of the aircraft which should be moved elsewhere
-    public float wingArea = 0.8f, chord = 0.5f, density = 1.2f, q;
+    [Header("Reference aircraft properties, used to calculate coefficients")]
+    public float wingArea = 0.8f;
+    public float chord = 0.5f, rho = 1.2f, q;
+
+    [Header("Fixed height of the centre of gravity")]
     public float cgHeight = -0.03f;
 
     // Manager handles the wiring of public things like rigid body and CG location
@@ -36,6 +44,7 @@ public class WindTunnelExperiment : MonoBehaviour
     Transform AircraftRoot { get { return Manager.aircraftRb.transform.root; } }
 
     // Going to run through a range of angle of attack values - DEGREES!!!
+    [Header("Independent variable ranges")]
     public float alphaMin, alphaMax;
     public int numberOfAlphaPoints;
 
@@ -44,28 +53,24 @@ public class WindTunnelExperiment : MonoBehaviour
     public int numberOfCgPoints;
 
     // Flap deflections
-    public List<float> elevatorDeflections = new List<float> { 0, 20, 40 };
     public float rudderMin, rudderMax;
     public int numberOfRudderPoints;
-    public List<float> flapDeflections = new List<float> { 0, 20, 40 };
-    public List<float> cgPositions = new List<float> { -0.05f, -0.1f, 0f, 0.1f };
+
+    [Header("For listed variables, the default setting is the first value in the list")]
+    public List<float> elevatorDeflections = new() { 0, 20, 40 };
+    public List<float> flapDeflections = new() { 0, 20, 40 };
+    public List<float> cgPositions = new() { -0.05f, -0.1f, 0f, 0.1f };
 
     // The joint functions are on this script
     ForceBalance forceBalance;
 
     // Outputs from the force balance
     public Vector3 measuredForceCoefficients, measuredTorqueCoefficients, measuredForce, measuredTorque;
-    
-    // Used for taring the force balance
-    public Vector3 forceZero, torqueZero;
-
 
     public bool done;
 
+    // Used to set the rotation of the aircraft at runtime, editor script provides a button in inspector
     public float desiredAlpha;
-
-    float alphaIncrement, alpha;
-    int stepCount = 0;
 
     private void Awake()
     {
@@ -87,14 +92,11 @@ public class WindTunnelExperiment : MonoBehaviour
 
         Debug.Log("Running wind tunnel experiments");
         
-
         StartCoroutine(GetAircraftData());
     }
 
     private void FixedUpdate()
     {
-        Debug.Log("uh");
-
         if (done)
             MeasureForces();
     }
@@ -157,12 +159,9 @@ public class WindTunnelExperiment : MonoBehaviour
 
     public IEnumerator GetAircraftData()
     {
-        Debug.Log(0);
         // Create the data file and put the header in
         FileStream f = File.Create(path);
         f.Close();
-
-        
 
         string header = GenerateFileHeader();
         header += '\n';
@@ -171,18 +170,14 @@ public class WindTunnelExperiment : MonoBehaviour
         
 
         float oldDt = Time.fixedDeltaTime;
-        Time.fixedDeltaTime = 0.001f;
+        Time.fixedDeltaTime = 0.001f * slowDownFactor;
 
         // Calculate the step size for alpha given the range and number of points
-        alphaIncrement = (alphaMax - alphaMin) / (numberOfAlphaPoints-1);
-        alpha = alphaMin;
-
-        Debug.Log("uh");
+        float alphaIncrement = (alphaMax - alphaMin) / (numberOfAlphaPoints-1);
+        float alpha = alphaMin;
 
         // Wait for the physics to simulate
         yield return new WaitForFixedUpdate();
-
-        Debug.Log(1);
 
         // Iterate over the angle of attack range
         for (int i = 0; i < numberOfAlphaPoints; i++)
@@ -213,7 +208,7 @@ public class WindTunnelExperiment : MonoBehaviour
             GlobalWind.windAzimuth = 180;
             GlobalWind.windElevation = 0;
             GlobalWind.windSpeed = 10;
-            q = 0.5f * density * GlobalWind.windSpeed * GlobalWind.windSpeed;
+            q = 0.5f * rho * GlobalWind.windSpeed * GlobalWind.windSpeed;
 
             // Apply the wind settings to all aero bodies in the scene
             GlobalWind.SetWindVelocity();
@@ -223,9 +218,6 @@ public class WindTunnelExperiment : MonoBehaviour
             Manager.controller.SetFlapDeflection(flapDeflections[0]);
             Manager.controller.SetElevatorDeflection(elevatorDeflections[0]);
             SetCgPosition(cgPositions[0]);
-
-            Debug.Log(2);
-
 
             // Iterate through the Cl values
             foreach (float deflection in flapDeflections)
@@ -288,14 +280,9 @@ public class WindTunnelExperiment : MonoBehaviour
 
             data += "\n";
 
-            Debug.Log(3);
-
-
             File.AppendAllText(path, data);
             // Increment the angle of attack for the next run
             alpha += alphaIncrement;
-
-            Debug.Log(4);
         }
 
         done = true;

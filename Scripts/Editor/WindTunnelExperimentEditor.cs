@@ -8,6 +8,8 @@ public class WindTunnelExperimentEditor : Editor
 {
     public override void OnInspectorGUI()
     {
+        GUILayout.Label("Data is saved in the Assets folder in \"Unity Wind Tunnel Data.txt\"");
+
         DrawDefaultInspector();
 
         if(GUILayout.Button("Set Aircraft Rotation"))

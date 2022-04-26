@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DataStreamer : MonoBehaviour
+public class DynamicWindTunnelData : MonoBehaviour
 {
     // Quick script just to log things to Grapher
     ExperimentManager Manager { get { return ExperimentManager.Singleton(); } }
@@ -29,8 +29,8 @@ public class DataStreamer : MonoBehaviour
         //if (aircraftAngles.x < -180) aircraftAngles.x += 180f;
         //if (aircraftAngles.y < -180) aircraftAngles.y += 180f;
         //if (aircraftAngles.z < -180) aircraftAngles.z += 180f;
-        Grapher.Log(pitch, "Pitch Angle (deg)");
-        Grapher.Log(yaw, "Yaw Angle (deg)");
-        Grapher.Log(roll, "Roll Angle (deg)");
+        Grapher.Log(pitch, "Angle of attack (deg)");
+        Grapher.Log(yaw, "Yaw (deg)");
+        Grapher.Log(roll, "Roll (deg)");
     }
 }
