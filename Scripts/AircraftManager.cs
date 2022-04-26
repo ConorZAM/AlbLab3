@@ -29,6 +29,8 @@ public class AircraftManager : MonoBehaviour
     public Material aircraftMaterial;
     [Range(0, 1)]
     public float bodyTransparency;
+    public bool useParticleSystems;
+    public GameObject particleSystems;
 
     [Header("Components")]
     public Transform portAileron;
@@ -75,6 +77,10 @@ public class AircraftManager : MonoBehaviour
         var col = aircraftMaterial.color;
         col.a = bodyTransparency;
         aircraftMaterial.color = col;
+
+        //enable particle systems for wing tips
+        if (useParticleSystems) particleSystems.SetActive(true);
+        else particleSystems.SetActive(false);
     }
 
     // Update is called once per frame
