@@ -49,6 +49,8 @@ public class AircraftManager : MonoBehaviour
     [HideInInspector]
     public float aileronDelta, elevatorDelta, rudderDelta, thrust; // control inputs in deg
 
+    public freeWheels wheels;
+
     Thruster thruster;
     enum Flapsetting { up, down };
     Flapsetting flapSetting = Flapsetting.up;
@@ -61,6 +63,8 @@ public class AircraftManager : MonoBehaviour
     {
         aircraftRigidBody.mass = mass;
         aircraftRigidBody.inertiaTensor = inertiaTensor;
+        aircraftRigidBody.inertiaTensorRotation = Quaternion.identity;
+
         thruster = FindObjectOfType<Thruster>();
 
         portAileronTrim = portAileron.localRotation;
@@ -112,6 +116,7 @@ public class AircraftManager : MonoBehaviour
         elevatorDelta = Mathf.Clamp(-maxControlThrow * Input.GetAxis("Elevator") - elevatorTrim, -maxControlThrow, maxControlThrow);
         rudderDelta = Mathf.Clamp(-maxControlThrow * Input.GetAxis("Rudder") - rudderTrim, -maxControlThrow, maxControlThrow);
 
+        elevatorTrim = Input.GetAxis("Elevator Trim")*10;
         
         // Flap is more like a button
         if (Input.GetButtonDown("FlapDown"))
@@ -147,6 +152,10 @@ public class AircraftManager : MonoBehaviour
             Flapsetting.down => flapDelta,
             _ => 0,
         };
+
+        // wheel brakes
+        if (Input.GetKey("space")) wheels.brakeTorque = 100;
+        else wheels.brakeTorque = 0;
 
         // Polarity
         if (ReverseThrottle)
