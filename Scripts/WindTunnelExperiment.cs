@@ -91,7 +91,7 @@ public class WindTunnelExperiment : MonoBehaviour
         GlobalWind.Initialise();
 
         Debug.Log("Running wind tunnel experiments");
-        
+
         StartCoroutine(GetAircraftData());
     }
 
@@ -119,7 +119,7 @@ public class WindTunnelExperiment : MonoBehaviour
         forceBalance.RemoveJoint();
 
         // Move the position marker
-        Manager.centreOfGravity.position = Manager.leadingEdge.TransformPoint(new Vector3(0,cgHeight,offset));
+        Manager.centreOfGravity.position = Manager.leadingEdge.TransformPoint(new Vector3(0, cgHeight, offset));
 
         // Update the rigid body as well
         Manager.UpdateAircraftCg();
@@ -167,13 +167,13 @@ public class WindTunnelExperiment : MonoBehaviour
         header += '\n';
         File.WriteAllText(path, header);
 
-        
+
 
         float oldDt = Time.fixedDeltaTime;
         Time.fixedDeltaTime = 0.001f * slowDownFactor;
 
         // Calculate the step size for alpha given the range and number of points
-        float alphaIncrement = (alphaMax - alphaMin) / (numberOfAlphaPoints-1);
+        float alphaIncrement = (alphaMax - alphaMin) / (numberOfAlphaPoints - 1);
         float alpha = alphaMin;
 
         // Wait for the physics to simulate
@@ -185,9 +185,9 @@ public class WindTunnelExperiment : MonoBehaviour
 
             /* In here we need to collect:
              *  - Cl, over a range of flap deployments
-             *  - Cd
+             *  - Cd, over a range of flap deployments
              *  - Cm_cg, over a range of elevator deflections
-             *  - Cn (yaw)
+             *  - Cn (yaw) Don't think this is a concern now?
              */
 
             string data = alpha.ToString("F2") + "\t";
