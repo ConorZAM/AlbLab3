@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(ExperimentManager))]
+[CustomEditor(typeof(FlightDynamicsLabManager))]
 public class ExperimentManagerEditor : Editor
 {
     public override void OnInspectorGUI()
@@ -12,7 +12,7 @@ public class ExperimentManagerEditor : Editor
 
         if(GUILayout.Button("Update Experiment Setup"))
         {
-            ExperimentManager manager = (ExperimentManager)target;
+            FlightDynamicsLabManager manager = (FlightDynamicsLabManager)target;
             manager.DoExperimentSetup();
         }
     }

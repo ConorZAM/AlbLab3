@@ -34,7 +34,7 @@ public class WindTunnelExperiment : MonoBehaviour
     public float cgHeight = -0.03f;
 
     // Manager handles the wiring of public things like rigid body and CG location
-    ExperimentManager Manager { get { return ExperimentManager.Singleton(); } }
+    FlightDynamicsLabManager Manager { get { return FlightDynamicsLabManager.Singleton(); } }
 
     // Global Wind sets the external wind velocity for all aero bodies in the scene, only gets the bodies
     // when the simulation starts though - don't add aero bodies while the simulation is running

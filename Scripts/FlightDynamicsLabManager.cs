@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ExperimentManager : MonoBehaviour
+public class FlightDynamicsLabManager : MonoBehaviour
 {
     /* The experiment manager is where all the magic is going to happen.
      * In this script we will need to handle:
@@ -12,12 +12,12 @@ public class ExperimentManager : MonoBehaviour
      * - Scene transition to free flight mode
      */
 
-    static ExperimentManager _singleton;
-    public static ExperimentManager Singleton()
+    static FlightDynamicsLabManager _singleton;
+    public static FlightDynamicsLabManager Singleton()
     {
         if (_singleton == null)
         {
-            _singleton = FindObjectOfType<ExperimentManager>();
+            _singleton = FindObjectOfType<FlightDynamicsLabManager>();
         }
         return _singleton;
     }
@@ -46,7 +46,7 @@ public class ExperimentManager : MonoBehaviour
         forceBalance.RemoveJoint();
 
         // Move the position marker
-        centreOfGravity.position = leadingEdge.TransformPoint(new Vector3(0,centreOfGravity.localPosition.y, offset));
+        centreOfGravity.position = leadingEdge.TransformPoint(new Vector3(0, centreOfGravity.localPosition.y, offset));
 
         // Update the rigid body as well
         UpdateAircraftCg();

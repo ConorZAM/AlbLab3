@@ -5,7 +5,7 @@ using UnityEngine;
 public class DynamicWindTunnelData : MonoBehaviour
 {
     // Quick script just to log things to Grapher
-    ExperimentManager Manager { get { return ExperimentManager.Singleton(); } }
+    FlightDynamicsLabManager Manager { get { return FlightDynamicsLabManager.Singleton(); } }
 
     // Start is called before the first frame update
     void Start()

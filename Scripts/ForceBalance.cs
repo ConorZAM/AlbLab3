@@ -3,12 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(ExperimentManager))]
+[RequireComponent(typeof(FlightDynamicsLabManager))]
 public class ForceBalance : MonoBehaviour
 {
     [HideInInspector]
     public ConfigurableJoint joint;
-    ExperimentManager Manager { get { return ExperimentManager.Singleton(); } }
+    FlightDynamicsLabManager Manager { get { return FlightDynamicsLabManager.Singleton(); } }
 
     [Header("Force Readings")]
     public Vector3 totalForce;
