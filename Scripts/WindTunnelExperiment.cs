@@ -30,9 +30,9 @@ public class WindTunnelExperiment : MonoBehaviour
     public float wingArea = 0.8f;
     public float chord = 0.5f, rho = 1.2f, q;
 
-    [Header("Fixed height of the centre of gravity")]
+    [Header("Fixed height of the CG. Note, this script overrides the CG position")]
     public float cgHeight = -0.03f;
-
+    public List<float> cgPositions = new() { -0.05f, -0.1f, 0f, 0.1f };
     // Manager handles the wiring of public things like rigid body and CG location
     FlightDynamicsLabManager Manager { get { return FlightDynamicsLabManager.Singleton(); } }
 
@@ -45,7 +45,8 @@ public class WindTunnelExperiment : MonoBehaviour
 
     // Going to run through a range of angle of attack values - DEGREES!!!
     [Header("Independent variable ranges")]
-    public float alphaMin, alphaMax;
+    public float alphaMin;
+    public float alphaMax;
     public int numberOfAlphaPoints;
 
     // CG Movements
@@ -59,7 +60,6 @@ public class WindTunnelExperiment : MonoBehaviour
     [Header("For listed variables, the default setting is the first value in the list")]
     public List<float> elevatorDeflections = new() { 0, 20, 40 };
     public List<float> flapDeflections = new() { 0, 20, 40 };
-    public List<float> cgPositions = new() { -0.05f, -0.1f, 0f, 0.1f };
 
     // The joint functions are on this script
     ForceBalance forceBalance;
@@ -69,7 +69,9 @@ public class WindTunnelExperiment : MonoBehaviour
 
     public bool done;
 
+    // NOT INCLUDED AS IT IS NOT NECESSARY IN THIS EXPERIMENT - NEEDS MOVING TO THE STATIC EXPERIMENT
     // Used to set the rotation of the aircraft at runtime, editor script provides a button in inspector
+    [HideInInspector]
     public float desiredAlpha;
 
     private void Awake()

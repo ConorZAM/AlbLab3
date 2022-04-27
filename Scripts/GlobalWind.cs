@@ -23,8 +23,8 @@ public class GlobalWind : MonoBehaviour
 
     public Vector3 earthWindVector;
 
-    float airDensity = 1.2f;
-
+    // All the aero bodies found in the scene at Start - not searching for new ones during fixed update
+    // as this would be a large overhead on the scene
     AeroBody[] aeroBodies;
 
     // Start is called before the first frame update
