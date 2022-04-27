@@ -22,7 +22,9 @@ public class FlightDynamicsLabManager : MonoBehaviour
         return _singleton;
     }
 
-
+    [Header("Select the settings for your experiment")]
+    public ExperimentSettings Settings;
+    [Space(20)]
     [Range(-100f, 100f)]
     public float CgAsPercentageOfMac;
     float MacLength = 0.233f;
@@ -37,7 +39,7 @@ public class FlightDynamicsLabManager : MonoBehaviour
     public AircraftManager controller;
     private Transform Root { get { return aircraftRb.transform.root; } }
 
-    public ExperimentSettings Settings;
+    
 
     public void SetCgPosition(float offset)
     {
@@ -84,6 +86,7 @@ public class FlightDynamicsLabManager : MonoBehaviour
                 break;
             case ExperimentSettings.JointState.Free:
                 RemoveJoint();
+                FindObjectOfType<ForceBalance>().enabled = false;
                 break;
             default:
                 AddFixedJoint();

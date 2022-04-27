@@ -18,6 +18,6 @@ MonoBehaviour:
   jointState: 2
   DataManagerName: Aircraft Angles
   aircraftVelocity: {x: 0, y: 0, z: 0}
-  windSpeed: 10
+  windSpeed: 0
   windAzimuth: 0
   windElevation: 0

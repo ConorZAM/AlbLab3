@@ -25,6 +25,7 @@ public class TotalDragArrows : ComponentArrows
         // Taking the computational hit to get the up to date values
         aeroBody.ResolveWindAndDimensions_1_to_6();
         inducedDragComponent.RunModel(aeroBody);
+        translationalDragComponent.RunModel(aeroBody);
 
         // Get the separate lift and induced drag force vectors in earth frame
         Vector3 inducedDrag_earthFrame = aeroBody.TransformDirectionBodyToEarth(inducedDragComponent.inducedDrag_bodyFrame);
