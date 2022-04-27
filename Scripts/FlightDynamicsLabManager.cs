@@ -24,6 +24,7 @@ public class FlightDynamicsLabManager : MonoBehaviour
 
     [Header("Select the settings for your experiment")]
     public ExperimentSettings Settings;
+    public bool useGroundBasedPilotViewInFreeFlightMode = false;
     [Space(20)]
     [Range(-100f, 100f)]
     public float CgAsPercentageOfMac;
@@ -64,6 +65,12 @@ public class FlightDynamicsLabManager : MonoBehaviour
         Camera.main.transform.position = Settings.cameraPosition;
         Camera.main.transform.eulerAngles = Settings.cameraEulerAngles;
 
+        //If in free flight mode give the option to use the  ground based observer camera instead of the third person camera
+        if (Settings.jointState == ExperimentSettings.JointState.Free & useGroundBasedPilotViewInFreeFlightMode==true)
+        {
+            Camera.main.enabled = false; // this is the third person camera
+            GameObject.Find("Ground Observer Camera").SetActive(true); // enable the ground pilot camera
+        }
 
         // Apply the joint
         switch (Settings.jointState)
