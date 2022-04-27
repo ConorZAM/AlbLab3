@@ -38,7 +38,7 @@ public class WindTunnelExperiment : MonoBehaviour
 
     // Global Wind sets the external wind velocity for all aero bodies in the scene, only gets the bodies
     // when the simulation starts though - don't add aero bodies while the simulation is running
-    GlobalWind GlobalWind { get { return Manager.globalWind; } }
+    GlobalWind GlobalWind { get { return GlobalWind.Singleton(); } }
 
     // This is the transform we'll position and rotate throughout the experiments
     Transform AircraftRoot { get { return Manager.aircraftRb.transform.root; } }

@@ -16,5 +16,8 @@ MonoBehaviour:
   cameraPosition: {x: 10, y: 4, z: -40}
   cameraEulerAngles: {x: 26, y: 0, z: 0}
   jointState: 2
-  DataManagerName: Data Streamer
-  aircraftSpeed: {x: 0, y: 0, z: 0}
+  DataManagerName: Aircraft Angles
+  aircraftVelocity: {x: 0, y: 0, z: 0}
+  windSpeed: 10
+  windAzimuth: 0
+  windElevation: 0

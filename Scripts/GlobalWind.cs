@@ -10,6 +10,15 @@ public class GlobalWind : MonoBehaviour
     // -----------------------------------------------------------
     // -----------------------------------------------------------
 
+    static GlobalWind _singleton;
+    public static GlobalWind Singleton()
+    {
+        if (_singleton == null)
+        {
+            _singleton = FindObjectOfType<GlobalWind>();
+        }
+        return _singleton;
+    }
 
     [Range(0, 30)]
     public float windSpeed = 1;

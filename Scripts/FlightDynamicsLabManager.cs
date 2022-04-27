@@ -34,7 +34,6 @@ public class FlightDynamicsLabManager : MonoBehaviour
     [Tooltip("Used to position the CG of the aircraft")]
     public Transform centreOfGravity;
     public Transform leadingEdge;
-    public GlobalWind globalWind;
     public AircraftManager controller;
     private Transform Root { get { return aircraftRb.transform.root; } }
 
@@ -58,25 +57,11 @@ public class FlightDynamicsLabManager : MonoBehaviour
     {
         SetCgPosition(-MacLength * CgAsPercentageOfMac / 100f);
 
+        // Set aircraft and camera positions
         Root.position = Settings.aircraftPosition;
         Camera.main.transform.position = Settings.cameraPosition;
         Camera.main.transform.eulerAngles = Settings.cameraEulerAngles;
 
-
-        // Have to use the active Data Loggers object first
-        GameObject loggers = GameObject.Find("Data Loggers");
-
-        // Disable all children
-        for (int i = 0; i < loggers.transform.childCount; i++)
-        {
-            loggers.transform.GetChild(i).gameObject.SetActive(false);
-        }
-
-        if (Settings.DataManagerName != "None")
-        {
-            // I don't have a clue why this works
-            loggers.transform.Find(Settings.DataManagerName).gameObject.SetActive(true);
-        }
 
         // Apply the joint
         switch (Settings.jointState)
@@ -103,6 +88,34 @@ public class FlightDynamicsLabManager : MonoBehaviour
             default:
                 AddFixedJoint();
                 break;
+        }
+
+        // Set the wind
+        GlobalWind.Singleton().windAzimuth = Settings.windAzimuth;
+        GlobalWind.Singleton().windElevation = Settings.windElevation;
+        GlobalWind.Singleton().windSpeed = Settings.windSpeed;
+        GlobalWind.Singleton().SetWindVelocity();
+
+        // Set the aircraft velocity
+        aircraftRb.velocity = Settings.aircraftVelocity;
+
+        // Enable the data manager script
+
+        // Have to use the active Data Loggers object first
+        GameObject loggers = GameObject.Find("Data Loggers");
+
+        // Disable all children
+        for (int i = 0; i < loggers.transform.childCount; i++)
+        {
+            loggers.transform.GetChild(i).gameObject.SetActive(false);
+        }
+
+        // Enable correct data manager
+        if (Settings.DataManagerName != "None")
+        {
+            // I don't have a clue why this works for disabled objects,
+            // but gameObject.Find doesn't work...
+            loggers.transform.Find(Settings.DataManagerName).gameObject.SetActive(true);
         }
     }
 

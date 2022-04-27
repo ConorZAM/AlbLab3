@@ -19,5 +19,8 @@ public class ExperimentSettings : ScriptableObject
     public Vector3 cameraEulerAngles;
     public JointState jointState = JointState.Fixed;
     public string DataManagerName = "Name of GameObject";
-    public Vector3 aircraftSpeed = Vector3.zero;
+    public Vector3 aircraftVelocity = Vector3.zero;
+    public float windSpeed = 10f;
+    public float windAzimuth = 0f;
+    public float windElevation = 0f;
 }
