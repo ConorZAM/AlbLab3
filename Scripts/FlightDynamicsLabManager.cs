@@ -104,30 +104,6 @@ public class FlightDynamicsLabManager : MonoBehaviour
                 AddFixedJoint();
                 break;
         }
-
-
-
-
-        //switch (experimentSetting)
-        //{
-        //    case ExperimentSetting.WindTunnelStatic:
-        //        DoWindTunnelSetup();
-        //        break;
-        //    case ExperimentSetting.WindTunnelLongitudinalDynamics:
-        //        DoLongitudinalDynamicsSetup();
-        //        break;
-        //    case ExperimentSetting.WindTunnelLateralDynamics:
-        //        DoLateralDynamicsSetup();
-        //        break;
-        //    case ExperimentSetting.WindTunnelGimbal:
-        //        DoGimbalSetup();
-        //        break;
-        //    case ExperimentSetting.FreeFlight:
-        //        DoFreeFlightSetup();
-        //        break;
-        //    default:
-        //        break;
-        //}
     }
 
 
@@ -185,64 +161,6 @@ public class FlightDynamicsLabManager : MonoBehaviour
         }
     }
 
-    //private void DoFreeFlightSetup()
-    //{
-    //    // For free flight we want no joints attached to the aircraft
-    //    // No data should be recorded or saved
-    //    // Might still be worth having telemetry going to grapher - will see how expensive it is
-
-    //    RemoveJoint();
-    //    Root.position = aircraftPosition_freeFlight;
-
-    //    // Disable the wind tunnel experiment
-    //    SetWindTunnelExperimentActive(false);
-    //}
-
-    //private void DoGimbalSetup()
-    //{
-    //    // Gimbal set up needs data from the aircraft to be sent over to grapher
-    //    // The aircraft will be attached to a joint with fixed translation but free rotation
-    //    // The wind is set by the user at/before runtime
-
-    //    // Need to take the joint off so we can move the aircraft
-    //    RemoveJoint();
-
-    //    Root.position = aircraftPosition_Gimbal;
-
-    //    AddGimbalJoint();
-
-    //    // Disable the wind tunnel experiment
-    //    SetWindTunnelExperimentActive(false);
-    //}
-
-    //private void DoWindTunnelSetup()
-    //{
-    //    // The wind tunnel is a strange one, we might have a parameter sweep in this script or
-    //    // that might be on another script to keep things organised. Either way, that's something
-    //    // which shouldn't automatically happen - the user needs to configure some of those settings
-    //    // so that they play a part in managing their data collection.
-    //    // Also, the aircraft needs to be on a completely fixed joint, no translation or rotation
-
-    //    // Need to take the joint off so we can move the aircraft
-    //    RemoveJoint();
-
-    //    Root.position = aircraftPosition_WindTunnel;
-
-    //    AddFixedJoint();
-
-    //    // Check that the experiment script is there and enabled
-    //    SetWindTunnelExperimentActive(true);
-    //}
-
-    //void SetWindTunnelExperimentActive(bool active)
-    //{
-    //    // Check that the experiment script is there and enabled
-    //    WindTunnelExperiment windTunnelExperiment = GetComponent<WindTunnelExperiment>();
-    //    if (windTunnelExperiment)
-    //    {
-    //        windTunnelExperiment.enabled = active;
-    //    }
-    //}
 
     public void UpdateAircraftCg()
     {

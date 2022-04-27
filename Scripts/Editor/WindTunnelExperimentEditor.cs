@@ -21,10 +21,10 @@ public class WindTunnelExperimentEditor : Editor
 
         DrawDefaultInspector();
 
-        if(GUILayout.Button("Set Aircraft Rotation"))
-        {
-            WindTunnelExperiment manager = (WindTunnelExperiment)target;
-            manager.SetAircraftRotation(manager.desiredAlpha);
-        }
+        //if(GUILayout.Button("Set Aircraft Rotation"))
+        //{
+        //    WindTunnelExperiment manager = (WindTunnelExperiment)target;
+        //    manager.SetAircraftRotation(manager.desiredAlpha);
+        //}
     }
 }

@@ -9,8 +9,8 @@ public class AircraftManager : MonoBehaviour
 
     [Header("Aircraft inertial properties")]
     public Rigidbody aircraftRigidBody;
-    public float mass;
-    public Vector3 inertiaTensor;
+    public float mass = 6;
+    public Vector3 inertiaTensor = new Vector3(0.92f, 1.96f, 1.08f);
 
     // Control settings
     [Header("Control Polarity")]
@@ -85,9 +85,12 @@ public class AircraftManager : MonoBehaviour
         col.a = bodyTransparency;
         aircraftMaterial.color = col;
 
-        //enable particle systems for wing tips
-        if (useParticleSystems) particleSystems.SetActive(true);
-        else particleSystems.SetActive(false);
+        if (particleSystems != null)
+        {
+            //enable particle systems for wing tips
+            if (useParticleSystems) particleSystems.SetActive(true);
+            else particleSystems.SetActive(false);
+        }
     }
 
     // Update is called once per frame
