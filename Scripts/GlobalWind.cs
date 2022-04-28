@@ -16,6 +16,7 @@ public class GlobalWind : MonoBehaviour
         if (_singleton == null)
         {
             _singleton = FindObjectOfType<GlobalWind>();
+            _singleton.Initialise();
         }
         return _singleton;
     }

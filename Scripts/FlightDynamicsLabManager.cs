@@ -101,6 +101,7 @@ public class FlightDynamicsLabManager : MonoBehaviour
         }
 
         // Set the wind
+        GlobalWind.Singleton().Initialise();
         GlobalWind.Singleton().windAzimuth = Settings.windAzimuth;
         GlobalWind.Singleton().windElevation = Settings.windElevation;
         GlobalWind.Singleton().windSpeed = Settings.windSpeed;
