@@ -12,13 +12,16 @@ public class AircraftManager : MonoBehaviour
     public float mass = 7f;
     private readonly Vector3 inertiaTensor = new Vector3(0.37f, 1.546f, 1.12f);
 
+    public int studentNumber;
+    int elevatorSign, aileronSign, flapSign, rudderSign;
     // Control settings
     [Header("Control Polarity")]
-    public bool ReverseEvelevator;
+    public bool ReverseElevator;
     public bool ReverseAileron;
     public bool ReverseRudder;
-    public bool ReverseFlap;
+    public bool ReverseFlap; //doesnt make physical sense as is
     public bool ReverseThrottle;
+     
 
     [Header("Control Trim")]
     public float elevatorTrim;
@@ -26,7 +29,7 @@ public class AircraftManager : MonoBehaviour
 
     [Header("Control Limits")]
     public float maxControlThrow = 35; // in deg
-    public float flapDelta; //high lift device deflection in deg
+    public float maxFlapDeflection; //high lift device deflection in deg
     public float maxThrust; //in N
     public float flapDeployTime;
 
@@ -47,7 +50,7 @@ public class AircraftManager : MonoBehaviour
     Quaternion portAileronTrim, starboardAileronTrim, portElevatorTrim, starboardElevatorTrim, starboardFlapTrim, portFlapTrim;
     float camberScale = 0.05f;
     [HideInInspector]
-    public float aileronDelta, elevatorDelta, rudderDelta, thrust; // control inputs in deg
+    public float aileronDelta, elevatorDelta, rudderDelta, flapDelta, thrust; // control inputs in deg
 
     public freeWheels wheels;
 
@@ -95,6 +98,13 @@ public class AircraftManager : MonoBehaviour
             if (useParticleSystems) particleSystems.SetActive(true);
             else particleSystems.SetActive(false);
         }
+
+        //set up the random intial control signs
+        Random.InitState(studentNumber);
+        elevatorSign = Random.Range(0, 2)*2-1;
+        rudderSign = Random.Range(0, 2) * 2 - 1;
+        aileronSign = Random.Range(0, 2) * 2 - 1;
+        flapSign = Random.Range(0, 2) * 2 - 1;
     }
 
     // Update is called once per frame
@@ -112,46 +122,35 @@ public class AircraftManager : MonoBehaviour
         thrust = Mathf.Clamp(maxThrust * Input.GetAxis("Thrust"), 0, maxThrust);
 
         // Get control flap inputs
-        aileronDelta = Mathf.Clamp(-maxControlThrow * Input.GetAxis("Aileron") - aileronTrim, -maxControlThrow, maxControlThrow);
-        elevatorDelta = Mathf.Clamp(-maxControlThrow * Input.GetAxis("Elevator") - elevatorTrim, -maxControlThrow, maxControlThrow);
-        rudderDelta = Mathf.Clamp(-maxControlThrow * Input.GetAxis("Rudder") - rudderTrim, -maxControlThrow, maxControlThrow);
+        aileronDelta =aileronSign* Mathf.Clamp(-maxControlThrow * Input.GetAxis("Aileron") - aileronTrim, -maxControlThrow, maxControlThrow);
+        elevatorDelta =elevatorSign* Mathf.Clamp(-maxControlThrow * Input.GetAxis("Elevator") - elevatorTrim, -maxControlThrow, maxControlThrow);
+        rudderDelta = rudderSign*Mathf.Clamp(-maxControlThrow * Input.GetAxis("Rudder") - rudderTrim, -maxControlThrow, maxControlThrow);
 
         elevatorTrim = Input.GetAxis("Elevator Trim")*10;
         
         // Flap is more like a button
         if (Input.GetButtonDown("FlapDown"))
         {
-            if (ReverseFlap)
-            {
-                flapSetting = Flapsetting.up;
-            }
-            else
-            {
+            //note the reverse logic was not as intended here - the direction of flap defl is what is needed to change, not the key that does it
+           
+            
                 flapSetting = Flapsetting.down;
                 
-            }
+            
         }
         // No else here, could have both buttons pressed
         if (Input.GetButtonDown("FlapUp"))
         {
-            if (ReverseFlap)
-            {
-                flapSetting = Flapsetting.down;
-            }
-            else
-            {
+            
                 flapSetting = Flapsetting.up;
 
-            }
+            
         }
 
-        // Funky switch expression
-        flapTarget = flapSetting switch
-        {
-            Flapsetting.up => 0,
-            Flapsetting.down => flapDelta,
-            _ => 0,
-        };
+        
+        
+
+       
 
         // wheel brakes
         if (Input.GetKey("space")) wheels.brakeTorque = 100;
@@ -162,10 +161,21 @@ public class AircraftManager : MonoBehaviour
             thrust *= -1f;
         if (ReverseAileron)
             aileronDelta *= -1f;
-        if (ReverseEvelevator)
+        if (ReverseElevator)
             elevatorDelta *= -1f;
         if (ReverseRudder)
             rudderDelta *= -1f;
+        if (ReverseFlap)
+            flapDelta = flapSign* maxFlapDeflection;
+        else flapDelta = -1f *flapSign* maxFlapDeflection;
+
+        // Funky switch expression
+        flapTarget = flapSetting switch
+        {
+            Flapsetting.up => 0,
+            Flapsetting.down => flapDelta,
+            _ => 0,
+        };
     }
 
     void ApplyControls()
