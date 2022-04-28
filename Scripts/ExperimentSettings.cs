@@ -15,10 +15,12 @@ public class ExperimentSettings : ScriptableObject
     // Everything we need for setting up the scene
 
     public Vector3 aircraftPosition = new Vector3(13, 7, 25);
+    public string cameraName = "main";
     public Vector3 cameraPosition;
     public Vector3 cameraEulerAngles;
+    public bool useMiniCams = true;
     public JointState jointState = JointState.Fixed;
-    public string DataManagerName = "Name of GameObject";
+    public string DataManagerName = "None";
     public Vector3 aircraftVelocity = Vector3.zero;
     public float windSpeed = 10f;
     public float windAzimuth = 0f;

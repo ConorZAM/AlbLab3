@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: Thrust Test
   m_EditorClassIdentifier: 
   aircraftPosition: {x: 13, y: 7, z: 25}
+  cameraName: main
   cameraPosition: {x: 0, y: 0, z: 0}
   cameraEulerAngles: {x: 0, y: 0, z: 0}
+  useMiniCams: 1
   jointState: 0
-  DataManagerName: Name of GameObject
+  DataManagerName: None
   aircraftVelocity: {x: 0, y: 0, z: 0}
   windSpeed: 10
   windAzimuth: 0

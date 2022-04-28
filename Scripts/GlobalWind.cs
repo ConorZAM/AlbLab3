@@ -38,16 +38,16 @@ public class GlobalWind : MonoBehaviour
     AeroBody[] aeroBodies;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         // Get all the aero bodies in the scene. This is assuming that no new bodies are
         // created at runtime
-        aeroBodies = FindObjectsOfType<AeroBody>();
+        Initialise();
 
         // If we didn't find any then we don't need this component to be running
         if (aeroBodies.Length == 0)
         {
-            Destroy(this);
+            this.enabled = false;
         }
     }
 
@@ -62,6 +62,7 @@ public class GlobalWind : MonoBehaviour
 
     public void Initialise()
     {
+        aeroBodies = FindObjectsOfType<AeroBody>();
         for (int i = 0; i < aeroBodies.Length; i++)
         {
             aeroBodies[i].Initialise();

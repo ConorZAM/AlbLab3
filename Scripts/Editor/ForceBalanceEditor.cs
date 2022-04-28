@@ -10,15 +10,12 @@ public class ForceBalanceEditor : Editor
     {
         DrawDefaultInspector();
 
-        ForceBalance forceBalance = (ForceBalance)target;
-        if (forceBalance.jointMode == ForceBalance.JointMode.Fixed || forceBalance.jointMode == ForceBalance.JointMode.Gimbal)
+        // Only allow for taring when the joint holds the aircraft in place
+        if (GUILayout.Button("Tare"))
         {
-            // Only allow for taring when the joint holds the aircraft in place
-            if (GUILayout.Button("Tare"))
-            {
-
-                forceBalance.Tare();
-            }
+            ForceBalance forceBalance = (ForceBalance)target;
+            forceBalance.Tare();
         }
+
     }
 }
