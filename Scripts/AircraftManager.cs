@@ -9,8 +9,8 @@ public class AircraftManager : MonoBehaviour
 
     [Header("Aircraft inertial properties")]
     public Rigidbody aircraftRigidBody;
-    public float mass = 6;
-    public Vector3 inertiaTensor = new Vector3(0.92f, 1.96f, 1.08f);
+    public float mass = 7f;
+    private readonly Vector3 inertiaTensor = new Vector3(0.37f, 1.546f, 1.12f);
 
     // Control settings
     [Header("Control Polarity")]

@@ -27,8 +27,8 @@ public class WindTunnelExperiment : MonoBehaviour
 
     // Properties of the aircraft which should be moved elsewhere
     [Header("Reference aircraft properties, used to calculate coefficients")]
-    public float wingArea = 0.8f;
-    public float chord = 0.5f, rho = 1.2f, q;
+    public float wingArea = 0.72f;
+    public float chord = 0.233f, rho = 1.225f, q;
 
     [Header("Fixed height of the CG. Note, this script overrides the CG position")]
     public float cgHeight = -0.03f;
