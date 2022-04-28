@@ -28,7 +28,7 @@ public class WindTunnelExperiment : MonoBehaviour
     // Properties of the aircraft which should be moved elsewhere
     [Header("Reference aircraft properties, used to calculate coefficients")]
     public float wingArea = 0.72f;
-    public float meanAerodynamicChord = 0.233f, rho = 1.225f, q;
+    public float chord = 0.233f, rho = 1.225f, q;
 
     [Header("Fixed height of the CG. Note, this script overrides the CG position")]
     public float cgHeight = -0.03f;
@@ -42,9 +42,6 @@ public class WindTunnelExperiment : MonoBehaviour
 
     // This is the transform we'll position and rotate throughout the experiments
     Transform AircraftRoot { get { return Manager.aircraftRb.transform.root; } }
-
-    // Used to place the aircraft CG - don't forget to redo the joint positions!
-    CentreOfMassManager CentreOfMassManager { get { return CentreOfMassManager.Singleton(); } }
 
     // Going to run through a range of angle of attack values - DEGREES!!!
     [Header("Independent variable ranges")]
@@ -90,6 +87,8 @@ public class WindTunnelExperiment : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        forceBalance = FindObjectOfType<ForceBalance>();
+        forceBalance.SetJointMode(ForceBalance.JointMode.Fixed);
 
         GlobalWind.Initialise();
 
@@ -113,18 +112,21 @@ public class WindTunnelExperiment : MonoBehaviour
         measuredForceCoefficients = -measuredForce / (q * wingArea);
         // Drag acts in the negative Z direction so swap it round
         measuredForceCoefficients.z *= -1;
-        measuredTorqueCoefficients = -measuredTorque / (q * wingArea * meanAerodynamicChord);
+        measuredTorqueCoefficients = -measuredTorque / (q * wingArea * chord);
         measuredTorqueCoefficients = CoordinateTransform.UnityToAircraftMoment(measuredTorqueCoefficients);
     }
 
     void SetCgPosition(float offset)
     {
-        Manager.RemoveJoint();
+        forceBalance.RemoveJoint();
 
         // Move the position marker
-        CentreOfMassManager.SetCgPositionFromOffset(offset);
+        Manager.centreOfGravity.position = Manager.leadingEdge.TransformPoint(new Vector3(0, cgHeight, offset));
 
-        Manager.AddJoint();
+        // Update the rigid body as well
+        Manager.UpdateAircraftCg();
+
+        forceBalance.AddJoint();
     }
 
     string GenerateFileHeader()
@@ -292,16 +294,16 @@ public class WindTunnelExperiment : MonoBehaviour
 
     public void SetAircraftRotation(Quaternion rotation)
     {
-        Manager.RemoveJoint();
+        forceBalance.RemoveJoint();
         AircraftRoot.rotation = rotation;
-        Manager.AddJoint();
+        forceBalance.AddJoint();
     }
 
     public void SetAircraftRotation(float _alpha)
     {
-        Manager.RemoveJoint();
+        forceBalance.RemoveJoint();
         AircraftRoot.rotation = Quaternion.Euler(-_alpha, 0, 0);
-        Manager.AddJoint();
+        forceBalance.AddJoint();
     }
 
     void OnDisable()

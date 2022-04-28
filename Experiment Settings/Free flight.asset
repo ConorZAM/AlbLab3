@@ -13,10 +13,8 @@ MonoBehaviour:
   m_Name: Free flight
   m_EditorClassIdentifier: 
   aircraftPosition: {x: 13, y: 6, z: 25}
-  cameraName: Ground Observer Camera
   cameraPosition: {x: 10, y: 7, z: 30}
   cameraEulerAngles: {x: 26, y: 0, z: 0}
-  useMiniCams: 1
   jointState: 4
   DataManagerName: Aircraft Angles
   aircraftVelocity: {x: 0, y: 0, z: 0}

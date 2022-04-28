@@ -13,13 +13,8 @@ MonoBehaviour:
   m_Name: Dynamic Control Response
   m_EditorClassIdentifier: 
   aircraftPosition: {x: 13, y: 8, z: 24}
-  cameraName: main
-  cameraPosition: {x: 13, y: 8, z: 29}
+  cameraPosition: {x: 10, y: 4, z: -40}
   cameraEulerAngles: {x: 26, y: 0, z: 0}
-  useMiniCams: 1
   jointState: 3
   DataManagerName: Aircraft Angles
-  aircraftVelocity: {x: 0, y: 0, z: 0}
-  windSpeed: 10
-  windAzimuth: 0
-  windElevation: 0
+  aircraftSpeed: {x: 0, y: 0, z: -10}

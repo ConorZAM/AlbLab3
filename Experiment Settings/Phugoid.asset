@@ -13,10 +13,8 @@ MonoBehaviour:
   m_Name: Phugoid
   m_EditorClassIdentifier: 
   aircraftPosition: {x: 13, y: 8, z: 24}
-  cameraName: main
-  cameraPosition: {x: 13, y: 8, z: 34}
+  cameraPosition: {x: 10, y: 4, z: -40}
   cameraEulerAngles: {x: 26, y: 0, z: 0}
-  useMiniCams: 1
   jointState: 2
   DataManagerName: Aircraft Angles
   aircraftVelocity: {x: 0, y: 0, z: 0}
