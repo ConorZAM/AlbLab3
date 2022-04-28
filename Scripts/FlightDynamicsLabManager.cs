@@ -24,54 +24,127 @@ public class FlightDynamicsLabManager : MonoBehaviour
 
     [Header("Select the settings for your experiment")]
     public ExperimentSettings Settings;
-    public bool useGroundBasedPilotViewInFreeFlightMode = false;
-    [Space(20)]
-    [Range(-100f, 100f)]
-    public float CgAsPercentageOfMac;
-    float MacLength = 0.233f;
-    float verticalCgOffset;
+    
+    //[Range(-100f, 100f)]
+    //public float CgAsPercentageOfMac;
+    //float MacLength = 0.233f;
+    //float verticalCgOffset;
 
     [HideInInspector]
     public ConfigurableJoint joint;
+    [Space(20)]
     public Rigidbody aircraftRb;
     [Tooltip("Used to position the CG of the aircraft")]
     public Transform centreOfGravity;
     public Transform leadingEdge;
     public AircraftManager controller;
     private Transform Root { get { return aircraftRb.transform.root; } }
+    private CentreOfMassManager CentreOfMassManager { get { return CentreOfMassManager.Singleton(); } }
 
-    
+
 
     public void SetCgPosition(float offset)
     {
-        ForceBalance forceBalance = GetComponent<ForceBalance>();
-        forceBalance.RemoveJoint();
+        RemoveJoint();
 
-        // Move the position marker
-        centreOfGravity.position = leadingEdge.TransformPoint(new Vector3(0, centreOfGravity.localPosition.y, offset));
+        CentreOfMassManager.SetCgPositionFromOffset(offset);
 
-        // Update the rigid body as well
-        UpdateAircraftCg();
-
-        forceBalance.AddJoint();
+        AddJoint();
     }
+
+    Transform SetCamera()
+    {
+        Transform cam = null;
+        bool useMain = Settings.cameraName.ToLower() == "main";
+
+        // Go through all cameras, MiniCam tag is used for overlay cameras
+        Camera[] cameras = FindObjectsOfType<Camera>(true);
+        for (int i = 0; i < cameras.Length; i++)
+        {
+            // Check if we have the main camera
+            if (useMain && cameras[i].CompareTag("MainCamera"))
+            {
+                cam = cameras[i].transform;
+                cam.gameObject.SetActive(true);
+                continue;
+            }
+
+            // If we're using mini cams skip their disable
+            if (Settings.useMiniCams && cameras[i].CompareTag("MiniCam"))
+            {
+                continue;
+            }
+
+            if (cameras[i].gameObject.name == Settings.cameraName)
+            {
+                cam = cameras[i].transform;
+                cam.gameObject.SetActive(true);
+                continue;
+            }
+
+            // If we get this far, the current camera is not relevant and can be disabled
+            cameras[i].gameObject.SetActive(false);
+        }
+
+        if (cam == null)
+        {
+            // Default to the main camera if we can't find the camera specified
+            Debug.LogWarning("Camera " + Settings.cameraName + " could not be found. Make sure it is set active. Using main camera for now.");
+            return Camera.main.transform;
+        }
+
+        return cam;
+
+    }
+
 
     public void DoExperimentSetup()
     {
-        SetCgPosition(-MacLength * CgAsPercentageOfMac / 100f);
+        CentreOfMassManager.SetCgPositionFromTransform();
+        //SetCgPosition(-MacLength * CgAsPercentageOfMac / 100f);
+
+        // Set the camera specified and get the transform for positioning
+        Transform cameraTransform = SetCamera();
 
         // Set aircraft and camera positions
         Root.position = Settings.aircraftPosition;
-        Camera.main.transform.position = Settings.cameraPosition;
-        Camera.main.transform.eulerAngles = Settings.cameraEulerAngles;
+        cameraTransform.position = Settings.cameraPosition;
+        cameraTransform.eulerAngles = Settings.cameraEulerAngles;
 
-        //If in free flight mode give the option to use the  ground based observer camera instead of the third person camera
-        if (Settings.jointState == ExperimentSettings.JointState.Free & useGroundBasedPilotViewInFreeFlightMode==true)
+        AddJoint();
+
+        // Set the wind
+        GlobalWind.Singleton().Initialise();
+        GlobalWind.Singleton().windAzimuth = Settings.windAzimuth;
+        GlobalWind.Singleton().windElevation = Settings.windElevation;
+        GlobalWind.Singleton().windSpeed = Settings.windSpeed;
+        GlobalWind.Singleton().SetWindVelocity();
+
+        // Set the aircraft velocity
+        aircraftRb.velocity = Settings.aircraftVelocity;
+
+        // -------- Enable the data manager script --------
+
+        // Have to use the active Data Loggers object first
+        GameObject loggers = GameObject.Find("Data Loggers");
+
+        // Disable all children
+        for (int i = 0; i < loggers.transform.childCount; i++)
         {
-            Camera.main.enabled = false; // this is the third person camera
-            GameObject.Find("Ground Observer Camera").SetActive(true); // enable the ground pilot camera
+            loggers.transform.GetChild(i).gameObject.SetActive(false);
         }
 
+        // Enable correct data manager
+        if (Settings.DataManagerName != "None")
+        {
+            // I don't have a clue why this works for disabled objects,
+            // but gameObject.Find doesn't work...
+            loggers.transform.Find(Settings.DataManagerName).gameObject.SetActive(true);
+        }
+    }
+
+    public void AddJoint()
+    {
         // Apply the joint
         switch (Settings.jointState)
         {
@@ -93,43 +166,15 @@ public class FlightDynamicsLabManager : MonoBehaviour
                 break;
             case ExperimentSettings.JointState.Free:
                 RemoveJoint();
-                FindObjectOfType<ForceBalance>().enabled = false;
+                // Turn off the force balance because there is no longer a joint
+                ForceBalance fb = FindObjectOfType<ForceBalance>();
+                if(fb != null) fb.enabled = false;
                 break;
             default:
                 AddFixedJoint();
                 break;
         }
-
-        // Set the wind
-        GlobalWind.Singleton().Initialise();
-        GlobalWind.Singleton().windAzimuth = Settings.windAzimuth;
-        GlobalWind.Singleton().windElevation = Settings.windElevation;
-        GlobalWind.Singleton().windSpeed = Settings.windSpeed;
-        GlobalWind.Singleton().SetWindVelocity();
-
-        // Set the aircraft velocity
-        aircraftRb.velocity = Settings.aircraftVelocity;
-
-        // Enable the data manager script
-
-        // Have to use the active Data Loggers object first
-        GameObject loggers = GameObject.Find("Data Loggers");
-
-        // Disable all children
-        for (int i = 0; i < loggers.transform.childCount; i++)
-        {
-            loggers.transform.GetChild(i).gameObject.SetActive(false);
-        }
-
-        // Enable correct data manager
-        if (Settings.DataManagerName != "None")
-        {
-            // I don't have a clue why this works for disabled objects,
-            // but gameObject.Find doesn't work...
-            loggers.transform.Find(Settings.DataManagerName).gameObject.SetActive(true);
-        }
     }
-
 
     public void AddFixedJoint()
     {
@@ -185,16 +230,10 @@ public class FlightDynamicsLabManager : MonoBehaviour
         }
     }
 
-
-    public void UpdateAircraftCg()
-    {
-        aircraftRb.centerOfMass = aircraftRb.transform.InverseTransformPoint(centreOfGravity.position);
-    }
-
-
     private void Awake()
     {
         GetSingleton();
+        DoExperimentSetup();
     }
 
     private void Reset()
@@ -214,15 +253,13 @@ public class FlightDynamicsLabManager : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private void FixedUpdate()
     {
-        DoExperimentSetup();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        if (CentreOfMassManager.HasLocalPositionChanged())
+        {
+            RemoveJoint();
+            CentreOfMassManager.SetCgPositionFromTransform();
+            AddJoint();
+        }
     }
 }
