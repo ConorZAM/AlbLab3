@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cc9714612770ee4fafd2c29c071dcd1, type: 3}
   m_Name: Weight and Balance
   m_EditorClassIdentifier: 
-  aircraftPosition: {x: 13, y: 7, z: 25}
+  aircraftPosition: {x: 5.581, y: 5.736, z: 24.56}
   cameraName: main
-  cameraPosition: {x: 0, y: 0, z: 0}
-  cameraEulerAngles: {x: 0, y: 0, z: 0}
-  useMiniCams: 1
-  jointState: 0
-  DataManagerName: None
+  cameraPosition: {x: 5.581, y: 7, z: 29}
+  cameraEulerAngles: {x: 30, y: 0, z: 0}
+  useMiniCams: 0
+  jointState: 4
+  DataManagerName: Load Cells
   aircraftVelocity: {x: 0, y: 0, z: 0}
-  windSpeed: 10
+  windSpeed: 0
   windAzimuth: 0
   windElevation: 0

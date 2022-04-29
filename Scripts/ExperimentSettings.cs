@@ -25,4 +25,6 @@ public class ExperimentSettings : ScriptableObject
     public float windSpeed = 10f;
     public float windAzimuth = 0f;
     public float windElevation = 0f;
+    public float aircraftTransparency = 0.1f;
+    public bool allowKeyboardInputs = true;
 }

@@ -23,3 +23,5 @@ MonoBehaviour:
   windSpeed: 0
   windAzimuth: 0
   windElevation: 0
+  aircraftTransparency: 1
+  allowKeyboardInputs: 1

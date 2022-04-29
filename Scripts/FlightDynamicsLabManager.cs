@@ -40,6 +40,7 @@ public class FlightDynamicsLabManager : MonoBehaviour
     public AircraftManager controller;
     private Transform Root { get { return aircraftRb.transform.root; } }
     private CentreOfMassManager CentreOfMassManager { get { return CentreOfMassManager.Singleton(); } }
+    AircraftManager AircraftManager { get { return AircraftManager.Singleton(); } }
 
 
 
@@ -141,6 +142,10 @@ public class FlightDynamicsLabManager : MonoBehaviour
             // but gameObject.Find doesn't work...
             loggers.transform.Find(Settings.DataManagerName).gameObject.SetActive(true);
         }
+
+        // Aircraft Settings
+        AircraftManager.UpdateTransparency(Settings.aircraftTransparency);
+        AircraftManager.usePilotControls = Settings.allowKeyboardInputs;
     }
 
     public void AddJoint()

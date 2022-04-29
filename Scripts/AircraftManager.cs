@@ -4,6 +4,17 @@ using UnityEngine;
 
 public class AircraftManager : MonoBehaviour
 {
+    static AircraftManager _singleton;
+    public static AircraftManager Singleton()
+    {
+        if (_singleton == null)
+        {
+            _singleton = FindObjectOfType<AircraftManager>();
+        }
+        return _singleton;
+    }
+
+
     [Tooltip("Enables Keyboard Inputs")]
     public bool usePilotControls = false;
 
@@ -84,11 +95,6 @@ public class AircraftManager : MonoBehaviour
         portTailPlane.dynamicallyVariableShape = true;
         starboardTailPlane.dynamicallyVariableShape = true;
 
-        //change aircraft transparency
-        var col = aircraftMaterial.color;
-        col.a = bodyTransparency;
-        aircraftMaterial.color = col;
-
         if (particleSystems != null)
         {
             //enable particle systems for wing tips
@@ -105,6 +111,15 @@ public class AircraftManager : MonoBehaviour
             GetControlInputs();
             ApplyControls();
         }
+    }
+
+    public void UpdateTransparency(float transparency)
+    {
+        bodyTransparency = transparency;
+        //change aircraft transparency
+        var col = aircraftMaterial.color;
+        col.a = bodyTransparency;
+        aircraftMaterial.color = col;
     }
 
     void GetControlInputs()

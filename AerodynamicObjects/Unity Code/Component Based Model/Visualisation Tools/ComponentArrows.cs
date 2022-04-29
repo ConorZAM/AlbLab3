@@ -86,6 +86,16 @@ public class ComponentArrows : MonoBehaviour
         {
             GameObject bodyGO = Resources.Load("Arrow Body") as GameObject;
             GameObject headGO = Resources.Load("Arrow Head") as GameObject;
+
+            int layerID = LayerMask.NameToLayer("Arrows");
+            if(layerID == -1)
+            {
+                Debug.LogError("No layer for Arrows was found. Please add a new layer named: Arrows");
+            }
+
+            bodyGO.layer = layerID;
+            headGO.layer = layerID;
+
             body = Instantiate(bodyGO).transform;
             head = Instantiate(headGO).transform;
 

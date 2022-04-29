@@ -18,7 +18,7 @@ public class getWeight : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         mytext.text = (Mathf.Round(1* cj.currentForce.y)/1).ToString()+ " N";
     }
