@@ -5,8 +5,16 @@ using System.IO;
 
 public class WindTunnelExperiment : MonoBehaviour
 {
-    // I've changed this because I want the name of the script - sorry!
-
+    // This script has been updated!
+    // It will now create two files, one for the alpha sweep and a separate file for the beta sweep
+    // The alpha sweep runs with zero beta for all data points
+    // The beta sweep uses the variable "alphaUsedInBetaSweep" for the angle of attack for all data points
+    // The two files are created based on the path provided - they will automatically append "alpha" and "beta" appropriately
+    
+    // =================================================================
+    // THE BETA SWEEP CAN BE TOGGLED ON AND OFF USING "performBetaSweep"
+    // =================================================================
+    
     /* This script is in charge of collecting the following sets of data:
      *  - Cl vs alpha
      *  - Cm_cg, Cl, alpha and cg position? Not sure what this graph is...
